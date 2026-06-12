@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alina Shakola — CatchEye</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0a08;--bg2:#15100c;--cream:#f3e9dc;--dim:#b3a690;--amber:#d6a15d;--line:rgba(243,233,220,.12);
+--serif:'Cormorant Garamond',serif;--frau:'Fraunces',serif;--sans:'Inter',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--amber);color:#1a1208}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:22px 40px;background:linear-gradient(rgba(14,10,8,.7),transparent);backdrop-filter:blur(6px)}
+.logo{font-family:var(--serif);font-size:22px;font-weight:600;display:flex;gap:9px;align-items:center}
+.logo .e{width:27px;height:16px;border:1.4px solid var(--amber);border-radius:50%/60%;display:flex;align-items:center;justify-content:center}
+.logo .e::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber)}
+.logo s{color:var(--amber);text-decoration:none}
+.nl{display:flex;gap:26px;list-style:none}
+.nl a{color:var(--cream);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.72;transition:.3s}
+.nl a:hover{color:var(--amber);opacity:1}
+.lang button{background:none;border:none;color:var(--cream);font-size:11px;letter-spacing:1px;cursor:pointer;opacity:.45;text-transform:uppercase;padding:3px 4px}
+.lang button.on{opacity:1;color:var(--amber)}
+@media(max-width:860px){.nl{display:none}nav{padding:16px 20px}}
+section{padding:13vh 6vw;position:relative}
+.eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin-bottom:26px;display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:42px;height:1px;background:var(--amber);opacity:.6}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.15fr .85fr;gap:0;align-items:stretch;padding:0}
+.hero-l{display:flex;flex-direction:column;justify-content:center;padding:0 6vw}
+.hero-l .kick{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--amber);margin-bottom:28px}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(52px,7vw,116px);line-height:.9;letter-spacing:-2px}
+.hero h1 em{font-style:italic;color:var(--amber)}
+.hero .sub{font-family:var(--frau);font-style:italic;font-weight:300;font-size:clamp(17px,1.7vw,23px);color:var(--dim);margin-top:26px;max-width:440px;line-height:1.45}
+.hero .scroll{margin-top:46px;font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.55;display:flex;align-items:center;gap:12px}
+.hero .scroll::after{content:"";width:46px;height:1px;background:var(--cream);opacity:.4;animation:grow 2s infinite}
+@keyframes grow{0%,100%{width:20px;opacity:.3}50%{width:46px;opacity:.7}}
+.hero-r{position:relative;overflow:hidden}
+.hero-r .pic{position:absolute;inset:-6%;background-size:cover;background-position:center top;background-image:url('img/alina-window.jpg');will-change:transform;transform:scale(1.06)}
+.hero-r::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg),transparent 22%);z-index:2}
+.hero-l .kick,.hero h1,.hero .sub,.hero .scroll{opacity:0;transform:translateY(28px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+.hero h1{animation-delay:.15s}.hero .sub{animation-delay:.35s}.hero .scroll{animation-delay:.55s}
+@keyframes rise{to{opacity:1;transform:none}}
+@media(max-width:860px){.hero{grid-template-columns:1fr;min-height:auto}.hero-l{padding:120px 22px 40px}.hero-r{height:62vh}.hero-r::after{background:linear-gradient(transparent 50%,var(--bg))}}
+.manifesto{text-align:center;padding:18vh 6vw;border-bottom:1px solid var(--line)}
+.manifesto q{font-family:var(--serif);font-weight:300;font-size:clamp(30px,5vw,68px);line-height:1.08;display:block;max-width:16ch;margin:0 auto;quotes:none}
+.manifesto q em{font-style:italic;color:var(--amber)}
+.manifesto .by{margin-top:34px;font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.6}
+/* ABOUT */
+.about{display:grid;grid-template-columns:.9fr 1.1fr;gap:6vw;align-items:center;border-bottom:1px solid var(--line)}
+.about .ph{aspect-ratio:4/5;background-size:cover;background-position:center top;border-radius:3px;position:relative}
+.about .ph .badge{position:absolute;bottom:18px;left:18px;background:rgba(14,10,8,.7);backdrop-filter:blur(6px);padding:8px 14px;border-radius:30px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--amber)}
+.about h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,4.4vw,64px);line-height:.98}
+.about h2 em{font-style:italic;color:var(--amber)}
+.about p{font-weight:300;font-size:15px;line-height:1.85;color:var(--dim);margin-top:22px;max-width:520px}
+.about .stats{display:flex;gap:40px;margin-top:34px;border-top:1px solid var(--line);padding-top:26px}
+.about .stats b{font-family:var(--serif);font-size:40px;color:var(--amber);display:block;line-height:1}
+.about .stats span{font-size:11px;letter-spacing:1px;opacity:.7;margin-top:4px;display:block}
+@media(max-width:860px){.about{grid-template-columns:1fr;gap:34px}}
+/* CRAFT */
+.craft{border-bottom:1px solid var(--line)}
+.craft h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.2vw,58px);line-height:1;margin-bottom:8px}
+.craft .intro{font-family:var(--frau);font-style:italic;font-weight:300;color:var(--dim);font-size:clamp(16px,1.6vw,21px);max-width:50ch;margin-bottom:50px}
+.craft .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.craft .c{position:relative;aspect-ratio:16/10;border-radius:6px;overflow:hidden;display:flex;align-items:flex-end;padding:30px}
+.craft .c .bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 1.2s ease}
+.craft .c:hover .bg{transform:scale(1.06)}
+.craft .c::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(10,7,5,.88))}
+.craft .c .t{position:relative;z-index:2}
+.craft .c .t b{font-family:var(--serif);font-size:30px;font-weight:500;display:block;transition:.4s}
+.craft .c .t span{font-size:13px;line-height:1.6;color:var(--dim);font-weight:300;display:block;margin-top:6px;max-width:34ch;opacity:0;max-height:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease,max-height .5s ease;overflow:hidden}
+.craft .c:hover .t span{opacity:1;max-height:90px;transform:none}
+.craft .c:hover .t b{color:var(--amber)}
+.craft .c .arrow{position:absolute;bottom:28px;right:30px;z-index:2;color:var(--amber);font-size:20px;opacity:0;transform:translateX(-8px);transition:.4s}
+.craft .c:hover .arrow{opacity:1;transform:none}
+.craft .c .n{position:absolute;top:24px;right:26px;font-size:11px;letter-spacing:2px;color:var(--amber);z-index:2}
+@media(max-width:860px){.craft .grid{grid-template-columns:1fr}}
+/* STORY save my history */
+/* STORY pause moment */
+.pause{min-height:88vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;
+  background:radial-gradient(120% 100% at 50% 30%,#1d130b,#0a0705);border-bottom:1px solid var(--line)}
+.pause .ember{position:absolute;inset:0;background:radial-gradient(40% 50% at 50% 60%,rgba(194,105,58,.18),transparent 70%);will-change:transform}
+.pause .q{position:relative;z-index:2;max-width:18ch;padding:0 6vw}
+.pause .small{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--amber);margin-bottom:30px}
+.pause h2{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5.4vw,78px);line-height:1.05}
+.pause h2 em{font-style:italic;color:var(--amber)}
+.story{background:var(--bg2);border-bottom:1px solid var(--line);padding:13vh 6vw 16vh}
+.story .wrap{max-width:1100px;margin:0 auto}
+.story h2{font-family:var(--serif);font-weight:300;font-size:clamp(34px,5vw,76px);line-height:1.02;margin:18px 0 30px}
+.story h2 em{font-style:italic;color:var(--amber)}
+.story .lede{font-family:var(--frau);font-style:italic;font-weight:300;font-size:clamp(18px,2vw,26px);line-height:1.5;color:var(--cream);max-width:30ch}
+.story .body{display:grid;grid-template-columns:1fr 1fr;gap:5vw;margin-top:50px;align-items:center}
+.story .body p{font-weight:300;font-size:15px;line-height:1.9;color:var(--dim)}
+.story .body p+p{margin-top:18px}
+.story .ba{position:relative;aspect-ratio:4/5;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.story .ba .a,.story .ba .b{position:absolute;inset:0;background-size:cover;background-position:center}
+.story .ba .b{filter:sepia(.55) contrast(.82) brightness(.72) grayscale(.3);clip-path:inset(0 50% 0 0)}
+.story .ba .dv{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--amber);z-index:4}
+.story .ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:6}
+.story .ba .l{position:absolute;top:50%;font-size:10px;letter-spacing:2px;text-transform:uppercase;background:rgba(10,7,5,.6);padding:5px 11px;border-radius:20px;z-index:5}
+.story .cta{display:inline-flex;align-items:center;gap:12px;margin-top:34px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#1a1208;background:var(--amber);padding:15px 28px;border-radius:40px;text-decoration:none;font-weight:600;transition:.3s;border:1px solid var(--amber)}
+.story .cta:hover{background:transparent;color:var(--amber)}
+@media(max-width:860px){.story .body{grid-template-columns:1fr;gap:34px}}
+/* LEARN */
+.learn{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center;border-bottom:1px solid var(--line)}
+.learn .ph{aspect-ratio:5/4;background-size:cover;background-position:center;border-radius:6px}
+.learn h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.2vw,58px);line-height:1}.learn h2 em{font-style:italic;color:var(--amber)}
+.learn p{font-weight:300;font-size:15px;line-height:1.85;color:var(--dim);margin-top:22px;max-width:480px}
+.learn ul{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:12px}
+.learn li{font-size:14px;display:flex;gap:12px;align-items:flex-start;color:var(--cream)}
+.learn li::before{content:"—";color:var(--amber)}
+.learn .cta{display:inline-block;margin-top:30px;font-size:12px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--amber);color:var(--amber);padding:14px 26px;border-radius:40px;text-decoration:none;transition:.3s}
+.learn .cta:hover{background:var(--amber);color:#1a1208}
+@media(max-width:860px){.learn{grid-template-columns:1fr;gap:30px}}
+/* AI band */
+.ai{text-align:center;border-bottom:1px solid var(--line);padding:16vh 6vw}
+.ai .eyebrow{justify-content:center}
+.ai h2{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5vw,72px);line-height:1.04;max-width:18ch;margin:0 auto}
+.ai h2 em{font-style:italic;color:var(--amber)}
+.ai p{font-weight:300;font-size:15px;line-height:1.85;color:var(--dim);max-width:60ch;margin:26px auto 0}
+.ai .row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:50px}
+.ai .row .t{aspect-ratio:3/4;background-size:cover;background-position:center;border-radius:6px}
+@media(max-width:860px){.ai .row{grid-template-columns:repeat(2,1fr)}}
+/* PORTFOLIO */
+.port{border-bottom:1px solid var(--line)}
+.port h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,56px);margin-bottom:40px}
+.port .g{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:220px;gap:14px}
+.port .g div{background-size:cover;background-position:center;border-radius:4px}
+.port .g .big{grid-row:span 2}
+@media(max-width:860px){.port .g{grid-template-columns:repeat(2,1fr)}}
+/* CONTACT */
+.contact{text-align:center;padding:18vh 6vw}
+.contact h2{font-family:var(--serif);font-weight:300;font-size:clamp(40px,7vw,104px);line-height:.96}.contact h2 em{font-style:italic;color:var(--amber)}
+.contact .opts{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:44px}
+.contact .opts a{font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:16px 30px;border-radius:40px;text-decoration:none;transition:.3s}
+.contact .o1{background:var(--amber);color:#1a1208;font-weight:600}.contact .o1:hover{background:transparent;color:var(--amber);box-shadow:inset 0 0 0 1px var(--amber)}
+.contact .o2{border:1px solid var(--line);color:var(--cream)}.contact .o2:hover{border-color:var(--amber);color:var(--amber)}
+/* BRANDS */
+.brands{border-bottom:1px solid var(--line);text-align:center;padding:9vh 6vw}
+.brands .eyebrow{justify-content:center}
+.brands .row{display:flex;flex-wrap:wrap;justify-content:center;gap:38px 60px;margin-top:30px;align-items:center}
+.brands .row span{font-family:var(--serif);font-size:clamp(20px,2.4vw,32px);font-weight:500;opacity:.55;letter-spacing:1px;transition:.3s}
+.brands .row span:hover{opacity:1;color:var(--amber)}
+/* SOCIALS row in contact */
+.socials{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:40px}
+.socials a{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:40px;padding:12px 20px;text-decoration:none;color:var(--cream);font-size:12px;letter-spacing:1px;transition:.3s}
+.socials a:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px)}
+.socials svg{width:16px;height:16px;fill:currentColor}
+.socials small{opacity:.55;text-transform:uppercase;letter-spacing:1px;font-size:10px}
+/* big footer */
+footer{border-top:1px solid var(--line);padding:64px 6vw 40px;background:var(--bg2)}
+.f-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px;margin-bottom:50px}
+.f-brand .lg{font-family:var(--serif);font-size:26px;font-weight:600;display:flex;gap:9px;align-items:center;margin-bottom:16px}
+.f-brand .lg .e{width:27px;height:16px;border:1.4px solid var(--amber);border-radius:50%/60%;display:flex;align-items:center;justify-content:center}
+.f-brand .lg .e::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber)}
+.f-brand p{font-size:13px;line-height:1.7;color:var(--dim);max-width:30ch}
+.f-col h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:18px}
+.f-col a{display:block;color:var(--cream);text-decoration:none;font-size:13px;opacity:.78;margin-bottom:11px;transition:.25s}
+.f-col a:hover{opacity:1;color:var(--amber);padding-left:4px}
+.f-col a small{display:block;opacity:.45;font-size:10px;letter-spacing:1px}
+.f-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:24px;font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.55;flex-wrap:wrap;gap:14px}
+@media(max-width:860px){.f-top{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo"><span class="e"></span>Catch<s>Eye</s></div>
+  <ul class="nl">
+    <li><a href="#about" data-i="n_about">Алина</a></li>
+    <li><a href="#craft" data-i="n_craft">Грани</a></li>
+    <li><a href="#story" data-i="n_story">История</a></li>
+    <li><a href="#learn" data-i="n_learn">Обучение</a></li>
+    <li><a href="#contact" data-i="n_contact">Контакт</a></li>
+  </ul>
+  <div class="lang"><button data-l="ua">UA</button><button data-l="ru" class="on">RU</button><button data-l="en">EN</button></div>
+</nav>
+<header class="hero">
+  <div class="hero-l">
+    <div class="kick" data-i="h_kick">CatchEye Studio · Алина Шакола</div>
+    <h1 data-i="h_title">Я возвращаю<br>лицам их <em>свет</em>.</h1>
+    <p class="sub" data-i="h_sub">Ретушёр с 12-летним опытом. Художник, который видит в кадре то, чего не видят другие — и доводит это до совершенства.</p>
+    <div class="scroll" data-i="h_scroll">Листайте — это история</div>
+  </div>
+  <div class="hero-r"><div class="pic" id="heroPic"></div></div>
+</header>
+<section class="manifesto">
+  <q class="reveal" data-i="m_quote">Я не переделываю лицо.<br>Я <em>возвращаю</em> ему свет.</q>
+  <div class="by reveal d1" data-i="m_by">— Алина Шакола, основатель CatchEye</div>
+</section>
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="ph reveal" style="background-image:url('img/alina-window.jpg')"><span class="badge" data-i="a_badge">Основатель · Ретушёр</span></div>
+  <div>
+    <div class="eyebrow reveal" data-i="a_eye">Кто такая Алина</div>
+    <h2 class="reveal d1" data-i="a_title">Художник, для которого<br>деталь — это <em>всё</em>.</h2>
+    <p class="reveal d2" data-i="a_p1">Двенадцать лет Алина Шакола работает там, где другие останавливаются. Кожа, свет, фактура, взгляд — она видит то, что делает кадр живым, и доводит это до совершенства, не отнимая у лица его души.</p>
+    <p class="reveal d2" data-i="a_p2">Сегодня она — на стыке двух миров: классической ретуши высокого уровня и новейших ИИ-технологий. Один обученный глаз, две кисти.</p>
+    <div class="stats reveal d3">
+      <div><b>12+</b><span data-i="a_s1">лет в ретуши</span></div>
+      <div><b>500+</b><span data-i="a_s2">проектов</span></div>
+      <div><b>4</b><span data-i="a_s3">направления</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CRAFT -->
+<section class="craft" id="craft">
+  <div class="eyebrow reveal" data-i="c_eye">Грани мастерства</div>
+  <h2 class="reveal" data-i="c_title">Четыре грани одного дара.</h2>
+  <p class="intro reveal d1" data-i="c_intro">Это не «услуги». Это то, что я люблю в своём ремесле — каждое по-своему.</p>
+  <div class="grid">
+    <div class="c reveal"><div class="bg" style="background-image:url('img/lottus2.jpg')"></div><span class="n">01</span><span class="arrow">→</span><div class="t"><b data-i="c1t">Beauty & Fashion</b><span data-i="c1s">Кожа, что дышит. Свет, что лепит. Ретушь, которую не замечаешь — только результат.</span></div></div>
+    <div class="c reveal d1"><div class="bg" style="background-image:url('img/wedding1.jpg')"></div><span class="n">02</span><span class="arrow">→</span><div class="t"><b data-i="c2t">Свадебные платья</b><span data-i="c2s">Платье — это портрет. Каждая складка, каждое кружево достойны внимания.</span></div></div>
+    <div class="c reveal"><div class="bg" style="background-image:url('img/gxve.jpg')"></div><span class="n">03</span><span class="arrow">→</span><div class="t"><b data-i="c3t">Коммерция</b><span data-i="c3s">Бренды, каталоги, кампании. Безупречность, которая продаёт.</span></div></div>
+    <div class="c reveal d1"><div class="bg" style="background-image:url('img/ai2.jpg')"></div><span class="n">04</span><span class="arrow">→</span><div class="t"><b data-i="c4t">ИИ-кампейны</b><span data-i="c4s">Генерирую образ — и дотягиваю рукой. Скорость машины, душа мастера.</span></div></div>
+  </div>
+</section>
+
+<!-- STORY pause moment -->
+<section class="pause" id="story">
+  <div class="ember" id="ember"></div>
+  <div class="q reveal">
+    <div class="small" data-i="ps_small">Личная история</div>
+    <h2 data-i="ps_q">Есть вещи, которые нельзя купить заново.<br>Фотография — <em>одна из них</em>.</h2>
+  </div>
+</section>
+
+<!-- STORY: Save My History -->
+<section class="story">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i="s_eye">Save My History</div>
+    <p class="lede reveal d1" data-i="s_lede">«Когда теряешь дом, понимаешь настоящую цену фотографии.»</p>
+    <h2 class="reveal d1" data-i="s_title">Я знаю, каково это —<br>бояться <em>потерять память</em>.</h2>
+    <div class="body">
+      <div>
+        <p class="reveal" data-i="s_p1">Я бежала от войны вместе со своей семьёй. Когда у тебя могут отнять всё, ты вдруг ясно видишь: семейный альбом — это не просто снимки. Это доказательство, что твои близкие были, любили, жили.</p>
+        <p class="reveal d1" data-i="s_p2">Тогда я взялась за то, что умею лучше всего — возвращать к жизни. Сначала свои фотографии. Потом — чужие. Выцветшие, надломленные, почти утраченные кадры снова обретали лицо, цвет, свет.</p>
+        <p class="reveal d2" data-i="s_p3">Так родился Save My History — место, где память семьи не исчезает. Даже если исчезает всё остальное.</p>
+        <a class="cta reveal d2" href="#contact" data-i="s_cta">Вернуть жизнь своему фото →</a>
+      </div>
+      <div class="ba reveal d1">
+        <div class="a" style="background-image:url('img/alina-window.jpg')"></div>
+        <div class="b" id="sb" style="background-image:url('img/alina-window.jpg')"></div>
+        <div class="dv" id="sd"></div>
+        <span class="l" style="left:14px" data-i="s_before">Было</span>
+        <span class="l" style="right:14px;color:var(--amber)" data-i="s_after">Стало</span>
+        <input type="range" min="0" max="100" value="50" id="ss">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARN -->
+<section class="learn" id="learn">
+  <div class="ph reveal" style="background-image:url('img/lottus3.jpg')"></div>
+  <div>
+    <div class="eyebrow reveal" data-i="l_eye">Обучение · Retouch.Start</div>
+    <h2 class="reveal d1" data-i="l_title">Я учу тому,<br>что <em>люблю</em>.</h2>
+    <p class="reveal d1" data-i="l_p">Когда-то я начинала без наставника — на ощупь. Мой курс создан, чтобы ты не блуждал так, как я.</p>
+    <ul>
+      <li class="reveal d2" data-i="l_i1">Понять честно: твоя ли это профессия — ретушь</li>
+      <li class="reveal d2" data-i="l_i2">Освоить базу высокого уровня без воды</li>
+      <li class="reveal d3" data-i="l_i3">Войти в самые актуальные ИИ-технологии уже сегодня</li>
+    </ul>
+    <a class="cta reveal d3" href="#contact" data-i="l_cta">Начать учиться</a>
+  </div>
+</section>
+
+<!-- AI band -->
+<section class="ai">
+  <div class="eyebrow reveal" data-i="ai_eye">На передовой</div>
+  <h2 class="reveal d1" data-i="ai_title">ИИ — не угроза мастерству.<br>Это <em>новая кисть</em>.</h2>
+  <p class="reveal d1" data-i="ai_p">Я создаю кастомные ИИ-модели, генерирую целые кампании без съёмки — и довожу каждый кадр рукой до премиум-уровня. Технология служит вкусу, а не наоборот.</p>
+  <div class="row">
+    <div class="t reveal" style="background-image:url('img/ai1.jpg')"></div>
+    <div class="t reveal d1" style="background-image:url('img/ai2.jpg')"></div>
+    <div class="t reveal d2" style="background-image:url('img/ai3.jpg')"></div>
+    <div class="t reveal d3" style="background-image:url('img/ai4.jpg')"></div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section class="brands">
+  <div class="eyebrow reveal" data-i="b_eye">Доверяют</div>
+  <div class="row reveal d1">
+    <span>VOGUE</span><span>Harper's BAZAAR</span><span>La Mer</span><span>GXVE</span><span>ELLE</span><span>L'Oréal</span>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="port">
+  <div class="eyebrow reveal" data-i="p_eye">Избранное</div>
+  <h2 class="reveal" data-i="p_title">Работы.</h2>
+  <div class="g">
+    <div class="big reveal" style="background-image:url('img/lottus1.jpg')"></div>
+    <div class="reveal d1" style="background-image:url('img/bluestraz.jpg')"></div>
+    <div class="reveal d2" style="background-image:url('img/eyecloseup.jpg')"></div>
+    <div class="reveal" style="background-image:url('img/ai3.jpg')"></div>
+    <div class="big reveal d1" style="background-image:url('img/lottus3.jpg')"></div>
+    <div class="reveal d2" style="background-image:url('img/gxve.jpg')"></div>
+    <div class="reveal d1" style="background-image:url('img/ai1.jpg')"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="eyebrow reveal" style="justify-content:center" data-i="ct_eye">Поговорим</div>
+  <h2 class="reveal d1" data-i="ct_title">Создадим что-то<br><em>настоящее</em>.</h2>
+  <div class="opts reveal d2">
+    <a class="o1" href="#" data-i="ct_o1">Заказать ретушь</a>
+    <a class="o2" href="#" data-i="ct_o2">Восстановить фото</a>
+    <a class="o2" href="#" data-i="ct_o3">Прийти на курс</a>
+  </div>
+  <div class="socials reveal d3">
+    <a href="https://instagram.com/alina.shakola" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.4.69.83.9 1.4.18.43.37 1.06.43 2.27.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2-.22.6-.48 1-.9 1.4-.4.43-.83.69-1.4.9-.43.18-1.06.37-2.27.43-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42-.6-.22-1-.48-1.4-.9-.43-.4-.69-.83-.9-1.4-.18-.43-.37-1.06-.43-2.27C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.22-.6.48-1 .9-1.4.4-.43.83-.69 1.4-.9.43-.18 1.06-.37 2.27-.43C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.43-1.3.83-.4.4-.63.8-.83 1.3-.16.4-.35 1-.4 2.1C2.6 8.5 2.6 8.9 2.6 12s0 3.5.07 4.7c.05 1.1.24 1.7.4 2.1.2.5.43.9.83 1.3.4.4.8.63 1.3.83.4.16 1 .35 2.1.4 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.43 1.3-.83.4-.4.63-.8.83-1.3.16-.4.35-1 .4-2.1.07-1.2.07-1.6.07-4.7s0-3.5-.07-4.7c-.05-1.1-.24-1.7-.4-2.1-.2-.5-.43-.9-.83-1.3-.4-.4-.8-.63-1.3-.83-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4zm0 3.1a4.9 4.9 0 110 9.8 4.9 4.9 0 010-9.8zm0 8.1a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4zm6.2-8.3a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0z"/></svg>alina.shakola <small data-i="so1">ретушь</small></a>
+    <a href="https://instagram.com/catcheye" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.4.69.83.9 1.4.18.43.37 1.06.43 2.27.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2-.22.6-.48 1-.9 1.4-.4.43-.83.69-1.4.9-.43.18-1.06.37-2.27.43-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42-.6-.22-1-.48-1.4-.9-.43-.4-.69-.83-.9-1.4-.18-.43-.37-1.06-.43-2.27C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.22-.6.48-1 .9-1.4.4-.43.83-.69 1.4-.9.43-.18 1.06-.37 2.27-.43C8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 110 9.8 4.9 4.9 0 010-9.8zm0 8.1a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4zm6.2-8.3a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0z"/></svg>catcheye <small data-i="so2">агентство</small></a>
+    <a href="https://instagram.com/dress.retouch" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.4.69.83.9 1.4.18.43.37 1.06.43 2.27.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2-.22.6-.48 1-.9 1.4-.4.43-.83.69-1.4.9-.43.18-1.06.37-2.27.43-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42-.6-.22-1-.48-1.4-.9-.43-.4-.69-.83-.9-1.4-.18-.43-.37-1.06-.43-2.27C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.22-.6.48-1 .9-1.4.4-.43.83-.69 1.4-.9.43-.18 1.06-.37 2.27-.43C8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 110 9.8 4.9 4.9 0 010-9.8zm0 8.1a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4zm6.2-8.3a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0z"/></svg>dress.retouch <small data-i="so3">свадьба</small></a>
+    <a href="https://instagram.com/save.my.history" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.22 1 .48 1.4.9.43.4.69.83.9 1.4.18.43.37 1.06.43 2.27.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2-.22.6-.48 1-.9 1.4-.4.43-.83.69-1.4.9-.43.18-1.06.37-2.27.43-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-1.8-.25-2.2-.42-.6-.22-1-.48-1.4-.9-.43-.4-.69-.83-.9-1.4-.18-.43-.37-1.06-.43-2.27C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.22-.6.48-1 .9-1.4.4-.43.83-.69 1.4-.9.43-.18 1.06-.37 2.27-.43C8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 110 9.8 4.9 4.9 0 010-9.8zm0 8.1a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4zm6.2-8.3a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0z"/></svg>save.my.history <small data-i="so4">память</small></a>
+    <a href="https://t.me/maximprods" target="_blank"><svg viewBox="0 0 24 24"><path d="M21.9 4.3l-3.3 15.6c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L18 5.4c.4-.36-.09-.56-.62-.2L6.9 12.06l-4.96-1.55c-1.08-.34-1.1-1.08.23-1.6l19.4-7.48c.9-.33 1.68.2 1.33 1.47z"/></svg>Telegram <small data-i="so5">связь</small></a>
+  </div>
+</section>
+<footer>
+  <div class="f-top">
+    <div class="f-brand">
+      <div class="lg"><span class="e"></span>CatchEye <span style="color:var(--amber)">Studio</span></div>
+      <p data-i="f_about">Студия премиальной ретуши и ИИ-кампейнов. В центре — Алина Шакола, ретушёр с 12-летним опытом.</p>
+    </div>
+    <div class="f-col"><h4 data-i="f_h1">Направления</h4>
+      <a href="#craft" data-i="f_l1">Ретушь</a><a href="#craft" data-i="f_l2">Свадебные платья</a>
+      <a href="#craft" data-i="f_l3">Коммерция</a><a href="#ai" data-i="f_l4">ИИ-кампейны</a>
+      <a href="#story" data-i="f_l5">Реставрация</a></div>
+    <div class="f-col"><h4 data-i="f_h2">Разделы</h4>
+      <a href="#about" data-i="f_m1">Об Алине</a><a href="#story" data-i="f_m2">Save My History</a>
+      <a href="#learn" data-i="f_m3">Обучение</a><a href="#contact" data-i="f_m4">Контакт</a></div>
+    <div class="f-col"><h4 data-i="f_h3">Соцсети</h4>
+      <a href="https://instagram.com/alina.shakola" target="_blank">Instagram · Ретушь<small>@alina.shakola</small></a>
+      <a href="https://instagram.com/catcheye" target="_blank">Instagram · Агентство<small>@catcheye</small></a>
+      <a href="https://instagram.com/dress.retouch" target="_blank">Instagram · Свадьба<small>@dress.retouch</small></a>
+      <a href="https://instagram.com/save.my.history" target="_blank">Instagram · Память<small>@save.my.history</small></a></div>
+  </div>
+  <div class="f-bottom">
+    <span>© CatchEye Studio · 2026</span>
+    <span data-i="f_tag">Ретушь · Реставрация · Обучение · ИИ</span>
+    <span>Alina Shakola</span>
+  </div>
+</footer>
+
+<script>
+// scroll reveal
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.18});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// before/after
+(function(){var s=document.getElementById('ss'),b=document.getElementById('sb'),d=document.getElementById('sd');
+if(s){function set(v){b.style.clipPath='inset(0 '+(100-v)+'% 0 0)';d.style.left=v+'%';}s.addEventListener('input',e=>set(e.target.value));set(50);}})();
+// parallax: hero photo + ember drift on scroll
+(function(){var hp=document.getElementById('heroPic'),em=document.getElementById('ember');var ticking=false;
+function upd(){var y=window.scrollY;if(hp)hp.style.transform='scale(1.06) translateY('+(y*0.06)+'px)';
+if(em){var r=em.getBoundingClientRect();var c=(r.top+r.height/2-window.innerHeight/2);em.style.transform='translateY('+(c*-0.08)+'px)';}ticking=false;}
+window.addEventListener('scroll',function(){if(!ticking){requestAnimationFrame(upd);ticking=true;}});upd();})();
+</script>
+</body>
+</html>
