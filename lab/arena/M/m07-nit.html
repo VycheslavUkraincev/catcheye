@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M-07 · Нить — Save My History</title>
+<style>
+  :root{
+    --bg:#f4ece0; --ink:#1a1410; --soft:#6f6457; --gold:#c9883f; --line:#cdbfae;
+    --frame:#1a1410;
+  }
+  [data-mode="cinematic"]{
+    --bg:#0c0a09; --ink:#f1e9dc; --soft:#9a8f7f; --gold:#e0a955; --line:#3a3026;
+    --frame:#e8dcc6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:Georgia,'Times New Roman',serif;
+    transition:background .8s ease,color .8s ease;overflow-x:hidden}
+  /* header */
+  header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;
+    justify-content:space-between;padding:22px 5vw;mix-blend-mode:difference;color:#fff}
+  .logo{font-size:22px;letter-spacing:.35em;font-weight:400}
+  nav{display:flex;gap:26px;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+  nav a{color:#fff;text-decoration:none;opacity:.75}
+  @media(max-width:760px){nav{display:none}}
+  /* mode toggle */
+  .toggle{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:60;
+    display:flex;border:1px solid var(--line);border-radius:40px;overflow:hidden;
+    font-size:11px;letter-spacing:.2em;text-transform:uppercase;background:var(--bg);
+    transition:.6s}
+  .toggle button{padding:9px 18px;border:0;background:transparent;color:var(--soft);
+    cursor:pointer;font-family:inherit;letter-spacing:.2em}
+  .toggle button.on{background:var(--gold);color:var(--bg)}
+  /* thread svg */
+  .thread{position:fixed;top:0;left:50%;transform:translateX(-50%);width:160px;height:100vh;
+    z-index:5;pointer-events:none}
+  .thread path{fill:none;stroke:var(--gold);stroke-width:1.6;
+    stroke-dasharray:2600;stroke-dashoffset:2600;transition:stroke-dashoffset .1s linear;
+    filter:drop-shadow(0 0 6px rgba(201,136,63,.0))}
+  [data-mode="cinematic"] .thread path{filter:drop-shadow(0 0 10px rgba(224,169,85,.5))}
+  /* sections */
+  section{position:relative;z-index:10;min-height:100vh;display:grid;align-items:center;
+    padding:14vh 7vw}
+  .hero{grid-template-columns:1fr 1fr;gap:5vw}
+  @media(max-width:860px){.hero{grid-template-columns:1fr;text-align:center}}
+  .hero .visual{position:relative;display:grid;place-items:center;min-height:50vh}
+  .photo{position:relative;width:min(74%,330px);aspect-ratio:4/5;
+    border:1px solid var(--frame);overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.25)}
+  .photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.4) contrast(.95)}
+  [data-mode="cinematic"] .photo img{filter:none}
+  .photo .burn{position:absolute;inset:-2px;pointer-events:none;opacity:0;transition:.8s;
+    background:
+      radial-gradient(120% 60% at 100% 0%, rgba(224,169,85,.55), transparent 55%),
+      radial-gradient(120% 60% at 0% 100%, rgba(224,169,85,.4), transparent 55%)}
+  [data-mode="cinematic"] .photo .burn{opacity:1}
+  .kintsugi{position:absolute;top:-4%;left:50%;width:2px;height:108%;
+    background:linear-gradient(var(--gold),transparent);opacity:0;transition:.8s}
+  [data-mode="cinematic"] .kintsugi{opacity:.8}
+  .eyebrow{font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);
+    margin-bottom:24px}
+  h1{font-size:clamp(40px,7vw,92px);font-weight:400;line-height:.98;letter-spacing:-.01em}
+  h1 .fade{display:block;color:var(--soft)}
+  .lead{margin-top:28px;font-size:clamp(15px,1.9vw,19px);line-height:1.7;color:var(--soft);
+    max-width:42ch}
+  @media(max-width:860px){.lead{margin-inline:auto}}
+  .cta{margin-top:40px;display:inline-block;padding:18px 44px;background:var(--gold);
+    color:var(--bg);text-decoration:none;letter-spacing:.16em;text-transform:uppercase;
+    font-size:13px;transition:.4s}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(201,136,63,.35)}
+  .free{display:block;margin-top:16px;font-size:12px;letter-spacing:.2em;color:var(--soft);
+    text-transform:uppercase}
+  /* generic story block */
+  .blk{max-width:640px;margin:0 auto;text-align:center}
+  .blk .eyebrow{margin-bottom:18px}
+  .blk h2{font-size:clamp(30px,5vw,60px);font-weight:400;line-height:1.1}
+  .blk p{margin-top:24px;font-size:clamp(15px,1.9vw,19px);line-height:1.75;color:var(--soft)}
+  .accent{color:var(--gold)}
+  .reveal{opacity:0;transform:translateY(34px);transition:1s cubic-bezier(.16,1,.3,1)}
+  .reveal.on{opacity:1;transform:none}
+  /* tree finale */
+  .tree-wrap{min-height:120vh;display:grid;place-items:center;text-align:center;position:relative}
+  .tree{width:min(90vw,560px)}
+  .tree path,.tree line{stroke:var(--gold);fill:none;stroke-width:1.4;
+    stroke-dasharray:1600;stroke-dashoffset:1600;transition:stroke-dashoffset 2s ease}
+  .tree.grow path,.tree.grow line{stroke-dashoffset:0}
+  footer{padding:8vh 7vw 12vh;text-align:center}
+  footer .cta{margin-top:10px}
+</style>
+</head>
+<body data-mode="minimal">
+
+  <div class="toggle">
+    <button id="bMin" class="on">Minimal</button>
+    <button id="bCin">Cinematic</button>
+  </div>
+
+  <header>
+    <div class="logo">SAVE</div>
+    <nav><a>About</a><a>Method</a><a>Family&nbsp;Pass</a><a>Stories</a><a>Login</a></nav>
+  </header>
+
+  <!-- THREAD -->
+  <svg class="thread" id="thread" viewBox="0 0 160 4000" preserveAspectRatio="xMidYMin slice">
+    <path id="threadPath" d="M80,0
+      C80,300 30,500 80,800
+      C130,1100 130,1300 80,1600
+      C30,1900 30,2100 80,2400
+      C130,2700 120,2900 80,3200
+      C50,3500 80,3700 80,4000"/>
+  </svg>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="visual">
+      <div class="photo">
+        <img src="https://smh-photos.fra1.digitaloceanspaces.com/assets/hero_before.jpg" alt="">
+        <div class="kintsugi"></div>
+        <div class="burn"></div>
+      </div>
+    </div>
+    <div class="text reveal on">
+      <div class="eyebrow">Fading Past · Сохраняем память</div>
+      <h1>Время<span class="fade">стирает черты.</span></h1>
+      <p class="lead">Старые снимки — это хрупкая химия, которая разрушается каждый день. Успейте сохранить улыбки тех, кто вам дорог, пока бумага ещё хранит их черты.</p>
+      <a class="cta" href="#">Оживить память за 15 секунд</a>
+      <span class="free">Первое фото — бесплатно</span>
+    </div>
+  </section>
+
+  <!-- 2 DISSOLUTION -->
+  <section><div class="blk reveal">
+    <div class="eyebrow">The Dissolution</div>
+    <h2>Оцифруйте историю рода <span class="accent">сегодня</span>.</h2>
+    <p>Фотобумага окисляется и теряет до 5% контрастности ежегодно. То, что ещё можно восстановить сегодня, через 10 лет может стать белым пятном. Сохраните визуальный код своей семьи, чтобы внуки увидели лица тех, чью фамилию они носят.</p>
+  </div></section>
+
+  <!-- 3 FOCUS / HEALING -->
+  <section><div class="blk reveal">
+    <div class="eyebrow">The Focus</div>
+    <h2>Исцеление, <span class="accent">а не ретушь</span>.</h2>
+    <p>Наша мультиагентная система восстанавливает анатомию лиц и глубину взгляда с точностью до 98%. Это не фильтры — это возвращение утраченных мгновений в 4K. В тарифе Pro каждый кадр проходит финальный аудит мастером-ретушёром.</p>
+  </div></section>
+
+  <!-- 4 FAMILY PASS -->
+  <section><div class="blk reveal">
+    <div class="eyebrow">Family Pass</div>
+    <h2>Подарок, который <span class="accent">невозможно забыть</span>.</h2>
+    <p>Лучшее, что можно подарить родителям — встреча с их молодостью. Откройте «ведро с фотографиями» вместе. Семейный доступ на 50 снимков — сохраните всё наследие за один вечер.</p>
+    <a class="cta" href="#" style="margin-top:34px">Подарить Family Pass</a>
+  </div></section>
+
+  <!-- 5 TRUST -->
+  <section><div class="blk reveal">
+    <div class="eyebrow">The Emotion</div>
+    <h2>Слёзы радости — наша <span class="accent">главная метрика</span>.</h2>
+    <p>Мы не просто восстанавливаем файлы — мы возвращаем людям их близких. Ваши данные только ваши: оригиналы удаляем через 24 часа после завершения работы.</p>
+  </div></section>
+
+  <!-- 6 LEGACY / TREE -->
+  <section class="tree-wrap"><div class="blk reveal">
+    <div class="eyebrow">Rooted in History</div>
+    <h2>Станьте тем, кто <span class="accent">сохранил корни</span>.</h2>
+    <svg class="tree" id="tree" viewBox="0 0 400 320">
+      <line x1="200" y1="320" x2="200" y2="170"/>
+      <path d="M200,200 C150,170 120,120 90,80"/>
+      <path d="M200,200 C250,170 280,120 310,80"/>
+      <path d="M200,170 C170,140 160,100 150,60"/>
+      <path d="M200,170 C230,140 240,100 250,60"/>
+      <path d="M200,150 C200,110 200,90 200,40"/>
+      <path d="M200,320 C160,300 140,290 110,300"/>
+      <path d="M200,320 C240,300 260,290 290,300"/>
+    </svg>
+    <p>«Потом» может не наступить. Спасённая сегодня фотография станет бесценной реликвией через 10 лет.</p>
+  </div></section>
+
+  <footer>
+    <a class="cta" href="#">Оживить мой семейный архив</a>
+  </footer>
+
+<script>
+  // mode toggle
+  const body=document.body, bMin=document.getElementById('bMin'), bCin=document.getElementById('bCin');
+  const setMode=m=>{body.dataset.mode=m;bMin.classList.toggle('on',m==='minimal');bCin.classList.toggle('on',m==='cinematic');
+    document.querySelector('.photo img').src='https://smh-photos.fra1.digitaloceanspaces.com/assets/hero_'+(m==='cinematic'?'after':'before')+'.jpg';};
+  bMin.onclick=()=>setMode('minimal'); bCin.onclick=()=>setMode('cinematic');
+
+  // thread draw on scroll
+  const path=document.getElementById('threadPath');
+  const len=path.getTotalLength(); path.style.strokeDasharray=len; path.style.strokeDashoffset=len;
+  const onScroll=()=>{const max=document.body.scrollHeight-innerHeight;
+    const p=Math.min(1,scrollY/max); path.style.strokeDashoffset=len*(1-p);};
+  addEventListener('scroll',onScroll); onScroll();
+
+  // reveals
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');
+    if(e.target.querySelector?.('#tree'))e.target.querySelector('#tree').classList.add('grow');
+    const t=document.getElementById('tree'); if(e.target.classList.contains('tree-wrap')&&t)t.classList.add('grow');}}),{threshold:.3});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // tree grow when in view
+  const tio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.getElementById('tree').classList.add('grow')}),{threshold:.4});
+  tio.observe(document.querySelector('.tree-wrap'));
+</script>
+</body>
+</html>
