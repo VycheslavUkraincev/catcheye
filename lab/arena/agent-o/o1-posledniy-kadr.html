@@ -1,0 +1,81 @@
+<!doctype html><html lang=ru><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Последний кадр · Save My History</title>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel=stylesheet>
+<style>
+:root{--bg:#0a0907;--ink:#f3ece0;--soft:#a89a85;--gold:#caa24b;--ease:cubic-bezier(.22,.61,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--gold);width:0;z-index:99;transition:width .1s}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:20px 32px;mix-blend-mode:difference}
+.logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff}
+.langs{display:flex;gap:12px;font-size:12px;letter-spacing:.1em;color:#fff}
+.langs button{background:none;border:none;color:#fff;opacity:.5;cursor:pointer;font-family:inherit;font-size:12px;transition:.3s}
+.langs button.on{opacity:1;color:var(--gold)}
+section{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 32px;max-width:900px;margin:0 auto}
+.kicker{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,9vw,104px);font-weight:600;line-height:1.02;letter-spacing:-.01em;text-wrap:balance}
+h1 em{font-style:italic;color:var(--gold)}
+.lead{font-size:clamp(17px,2.4vw,22px);color:var(--soft);max-width:560px;margin-top:28px;font-weight:300;line-height:1.5}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.scrollhint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);opacity:.6}
+.timeline{font-family:'Cormorant Garamond',serif;font-size:clamp(80px,20vw,260px);font-weight:700;color:rgba(202,162,75,.13);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:-1;pointer-events:none}
+.frame-wrap{position:relative;width:100%;max-width:640px;margin:0 auto;aspect-ratio:4/5;border-radius:8px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.6)}
+.frame-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.frame-wrap .after{clip-path:inset(0 0 0 50%);transition:clip-path .1s}
+.heartbeat{position:absolute;top:50%;left:50%;width:1px;background:var(--gold);height:100%;transform:translateX(-50%);box-shadow:0 0 24px var(--gold)}
+.cap{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-top:16px}
+.quote{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,52px);font-weight:600;line-height:1.2;text-wrap:balance}
+.cta{display:inline-flex;align-items:center;gap:12px;margin-top:36px;padding:18px 38px;background:var(--gold);color:#0a0907;text-decoration:none;border-radius:40px;font-weight:500;font-size:16px;letter-spacing:.02em;transition:.3s var(--ease);width:fit-content}
+.cta:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(202,162,75,.3)}
+.vignette{position:fixed;inset:0;pointer-events:none;z-index:40;background:radial-gradient(ellipse 110% 80% at 50% 50%,transparent 55%,rgba(0,0,0,.5) 100%)}
+footer{text-align:center;padding:60px 32px;font-size:12px;color:var(--soft);letter-spacing:.05em}
+</style></head><body>
+<div class=progress id=prog></div>
+<div class=vignette></div>
+<nav><div class=logo>Save My History</div><div class=langs><button class=on>RU</button><button>UA</button><button>EN</button></div></nav>
+
+<section>
+  <div class=timeline>1962</div>
+  <div class=kicker>Последний кадр</div>
+  <h1 class=reveal>У каждой семьи есть <em>последний кадр</em>, который ещё можно спасти</h1>
+  <p class="lead reveal">Плёнка выцветает. Бумага желтеет. Лица, которые уже не переснять, тают с каждым годом. Но их ещё можно вернуть — такими, какими они были.</p>
+  <div class=scrollhint>↓ листай вниз</div>
+</section>
+
+<section>
+  <div class=kicker class=reveal>Одно фото · две жизни</div>
+  <div class="frame-wrap reveal">
+    <img class=before src="https://savemyhistory.tech/assets/cases/case_c10_before.jpg" alt="старое фото до реставрации">
+    <img class=after id=afterimg src="https://savemyhistory.tech/assets/cases/case_c10_after.jpg" alt="фото после бережной реставрации">
+    <div class=heartbeat id=hb></div>
+  </div>
+  <div class=cap><span>было · 1962</span><span>стало · сегодня</span></div>
+</section>
+
+<section>
+  <p class="quote reveal">Мы не приукрашиваем лицо.<br>Мы возвращаем <em style="color:var(--gold)">того самого человека</em> — без подмены, без идеализации.</p>
+  <p class="lead reveal">Каждое фото проходит проверку: лицо должно остаться собой. Это не фильтр. Это память.</p>
+</section>
+
+<section style="text-align:center;align-items:center">
+  <div class=kicker class=reveal>Верни первое лицо бесплатно</div>
+  <h1 class=reveal style="font-size:clamp(34px,7vw,76px)">Пока кадр не исчез</h1>
+  <a class="cta reveal" href="https://savemyhistory.tech">Восстановить фото →</a>
+</section>
+
+<footer>Save My History · 283 истории уже возвращены</footer>
+
+<script>
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;prog.style.width=p+'%';
+  // heartbeat reveal: clip moves with scroll
+  const af=document.getElementById('afterimg');const hb=document.getElementById('hb');
+  if(af){const reveal=Math.min(100,Math.max(0,(p-12)*4));af.style.clipPath='inset(0 0 0 '+(100-reveal)+'%)';hb.style.left=(100-reveal)+'%';}
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.2});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script></body></html>
