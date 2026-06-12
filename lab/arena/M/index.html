@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Агент М · макеты</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#f3e9dc;--dim:#b3a690;--amber:#d6a15d;--bg:#0b0806;--card:#16100a;--line:rgba(243,233,220,.12);--serif:'Cormorant Garamond',serif;--sans:'Inter',sans-serif}
+body{background:var(--bg);color:var(--cream);font-family:var(--sans);font-weight:300;min-height:100vh}
+.wrap{max-width:1000px;margin:0 auto;padding:60px 28px 90px}
+.back{color:var(--dim);text-decoration:none;font-size:12px;opacity:.6}
+header{text-align:center;margin:30px 0 50px}
+.badge{font-family:var(--serif);font-style:italic;font-size:54px;color:var(--amber);line-height:1}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5vw,48px);margin-top:8px}
+.sub{color:var(--dim);margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:var(--cream);transition:.35s}
+.card:hover{transform:translateY(-4px);border-color:var(--amber)}
+.thumb{height:160px;background:#0a0705 center/cover}
+.cb{padding:18px 20px 22px}
+.cb .tag{font-size:11px;letter-spacing:1px;color:var(--amber);text-transform:uppercase}
+.cb h3{font-family:var(--serif);font-size:23px;font-weight:400;margin:5px 0 6px}
+.cb p{color:var(--dim);font-size:13px}
+</style></head>
+<body><div class="wrap">
+<a class="back" href="../">← арена</a>
+<header><div class="badge">М</div><h1>Макеты Агента М</h1><p class="sub">«Память уходит — верни её» · разные вселенные, одна правда</p></header>
+<div class="grid">
+  <a class="card" href="m01-tree/"><div class="thumb" style="background-image:url('m01-tree/bark.jpg')"></div><div class="cb"><div class="tag">M-01 · дерево-корни</div><h3>Корни</h3><p>Спуск камеры по стволу к корням рода. Видео-фон, макро-кора.</p></div></a>
+  <a class="card" href="m02-attic/"><div class="thumb" style="background-image:url('m02-attic/img/bg.jpg')"></div><div class="cb"><div class="tag">M-02 · чердак-коробка</div><h3>Коробка на антресоли</h3><p>Пыльный чердак, свет из окна. «Твоя жизнь — в коробке».</p></div></a>
+  <a class="card" href="m03-darkroom/"><div class="thumb" style="background-image:url('m03-darkroom/img/bg.jpg')"></div><div class="cb"><div class="tag">M-03 · плёнка-проявка</div><h3>Проявка</h3><p>Красный свет проявочной. Лицо проступает из темноты на скролле.</p></div></a>
+</div>
+</div></body></html>
