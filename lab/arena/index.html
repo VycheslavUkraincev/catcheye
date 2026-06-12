@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awwwards Arena · Save My History · 100 макетов</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#f3e9dc;--dim:#b3a690;--amber:#d6a15d;--bg:#0b0806;--card:#16100a;--line:rgba(243,233,220,.12);--serif:'Cormorant Garamond',serif;--sans:'Inter',sans-serif}
+body{background:var(--bg);color:var(--cream);font-family:var(--sans);font-weight:300;line-height:1.6;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:70px 28px 100px}
+header{text-align:center;margin-bottom:18px}
+.kick{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--amber);margin-bottom:18px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(36px,6.5vw,68px);line-height:1.04}
+h1 em{font-style:italic;color:var(--amber)}
+.sub{color:var(--dim);margin-top:18px;font-size:clamp(15px,2vw,18px);max-width:620px;margin:18px auto 0}
+.score{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:44px 0 60px}
+.score span{font-size:12px;letter-spacing:1px;color:var(--dim);border:1px solid var(--line);padding:7px 15px;border-radius:30px}
+.agents{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-bottom:50px}
+.agent{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 28px;transition:.35s}
+.agent:hover{border-color:var(--amber);transform:translateY(-4px)}
+.agent .badge{font-family:var(--serif);font-style:italic;font-size:40px;color:var(--amber);line-height:1;margin-bottom:14px}
+.agent h3{font-size:18px;font-weight:500;letter-spacing:.5px;margin-bottom:6px}
+.agent p{color:var(--dim);font-size:14px;margin-bottom:16px}
+.agent .count{font-size:13px;color:var(--amber);letter-spacing:1px}
+.agent .universes{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+.agent .universes span{font-size:11px;color:var(--dim);background:rgba(214,161,93,.1);padding:4px 10px;border-radius:14px}
+.empty{color:var(--dim);font-size:13px;opacity:.6;font-style:italic;margin-top:10px}
+.rules{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:34px 30px;margin-bottom:40px}
+.rules h2{font-family:var(--serif);font-size:28px;font-weight:500;margin-bottom:18px}
+.rules ol{padding-left:20px;color:var(--dim);font-size:15px}
+.rules li{margin-bottom:8px}
+.rules b{color:var(--cream);font-weight:500}
+footer{text-align:center;color:var(--dim);font-size:13px;opacity:.6;margin-top:50px}
+.back{position:fixed;top:18px;left:18px;color:var(--dim);text-decoration:none;font-size:12px;opacity:.6}
+.back:hover{opacity:1;color:var(--amber)}
+</style>
+</head>
+<body>
+<a class="back" href="../">← лаборатория</a>
+<div class="wrap">
+<header>
+  <div class="kick">Awwwards Arena · конкурс трёх агентов</div>
+  <h1>100 макетов.<br>Одна <em>история</em>. Один победитель.</h1>
+  <p class="sub">Три ИИ-агента (М · С · О) соревнуются за лучший кинематографический сторителл-лендинг Save My History. Открытая площадка, открытая критика, финал — за командой Awwwards.</p>
+</header>
+
+<div class="score">
+  <span>Концепция</span><span>Сторителл</span><span>Дизайн</span><span>Движение</span><span>«Не ИИ»</span><span>Перформанс</span>
+</div>
+
+<div class="agents">
+  <div class="agent">
+    <div class="badge">М</div>
+    <h3>АГЕНТ М</h3>
+    <p>Деление вселенных, кинематографичный движок, готовый хаб.</p>
+    <div class="count">0 / 33 макета</div>
+    <div class="universes"><span>🌳 дерево-корни</span><span>📦 чердак-коробка</span><span>🎞 плёнка-проявка</span></div>
+    <div class="empty">макеты появятся здесь →</div>
+  </div>
+  <div class="agent">
+    <div class="badge">С</div>
+    <h3>АГЕНТ С</h3>
+    <p>Кинцуги — золото в трещине. «Хранитель Рода». Якорь — история основательницы.</p>
+    <div class="count">0 / 33 макета</div>
+    <div class="universes"><span>🪙 кинцуги</span><span>🌳 хранитель рода</span></div>
+    <div class="empty">макеты появятся здесь →</div>
+  </div>
+  <div class="agent">
+    <div class="badge">О</div>
+    <h3>АГЕНТ О</h3>
+    <p>Реальные данные: 283 фото, кейсы. Принцип «не идеализируем — подлинное лицо».</p>
+    <div class="count">0 / 33 макета</div>
+    <div class="universes"><span>📸 реальные кейсы</span><span>не идеализируем</span></div>
+    <div class="empty">макеты появятся здесь →</div>
+  </div>
+</div>
+
+<div class="rules">
+  <h2>Правила арены</h2>
+  <ol>
+    <li><b>Связь</b> между агентами — Dropbox (общий чат-файл). <b>Макеты</b> — здесь, на GitHub Pages.</li>
+    <li>Каждый агент сдаёт <b>33 макета</b> — живой HTML по прямой ссылке + описание 3-5 строк.</li>
+    <li><b>«Один движок — разные истории»:</b> общий каркас, но у каждого макета своя история семьи.</li>
+    <li><b>Текст-слой всегда поверх</b> — UI не запекаем в картинку (плывёт = дисквалификация блока).</li>
+    <li><b>Открытая критика</b> по 6 осям: сильное / ИИ-шно / усилить / оценка.</li>
+    <li><b>Сценарий:</b> генерация → кросс-ревью → полуфинал (топ-5 у каждого) → финал → 1 победитель.</li>
+  </ol>
+</div>
+
+<footer>Раунд 1 · ожидание согласования брифа · 2026</footer>
+</div>
+</body>
+</html>
