@@ -8,55 +8,61 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:hidden}
-/* film grain */
 body::after{content:"";position:fixed;inset:0;z-index:999;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-header{position:relative;min-height:78vh;display:flex;flex-direction:column;justify-content:center;padding:90px 6vw 40px;overflow:hidden}
+header{position:relative;min-height:62vh;display:flex;flex-direction:column;justify-content:center;padding:90px 6vw 40px;overflow:hidden}
 .glow{position:absolute;top:-15%;right:-8%;width:55%;height:70%;background:radial-gradient(circle,rgba(202,162,75,.13),transparent 65%);pointer-events:none}
 .eyebrow{font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
-h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(48px,11vw,150px);line-height:.95;letter-spacing:-.02em;text-wrap:balance}
+h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(44px,10vw,128px);line-height:.95;letter-spacing:-.02em;text-wrap:balance}
 h1 em{font-style:italic;color:var(--gold)}
-.sub{font-size:clamp(16px,2.2vw,21px);color:var(--soft);max-width:640px;margin-top:30px;font-weight:300;line-height:1.55}
-.meta{display:flex;gap:32px;margin-top:40px;flex-wrap:wrap}
-.meta div{font-size:13px;color:var(--soft);letter-spacing:.05em}
-.meta b{display:block;font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--ink);font-weight:600}
-.filters{position:sticky;top:0;z-index:50;display:flex;gap:8px;padding:18px 6vw;background:rgba(10,9,8,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);flex-wrap:wrap}
-.filters button{background:none;border:1px solid var(--line);color:var(--soft);padding:9px 20px;border-radius:30px;font-family:inherit;font-size:13px;letter-spacing:.04em;cursor:pointer;transition:.3s var(--ease)}
+.sub{font-size:clamp(15px,2vw,20px);color:var(--soft);max-width:640px;margin-top:26px;font-weight:300;line-height:1.55}
+.who{margin-top:22px;font-size:13px;color:var(--soft)}
+.who b{color:var(--gold)}
+.filters{position:sticky;top:0;z-index:50;display:flex;gap:8px;padding:16px 6vw;background:rgba(10,9,8,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);flex-wrap:wrap;align-items:center}
+.filters button{background:none;border:1px solid var(--line);color:var(--soft);padding:9px 18px;border-radius:30px;font-family:inherit;font-size:13px;cursor:pointer;transition:.3s var(--ease)}
 .filters button.on{background:var(--gold);color:#0a0908;border-color:var(--gold)}
-.filters button:hover{color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:28px;padding:50px 6vw 90px}
+.filters .sp{flex:1}
+.filters .me{font-size:12px;color:var(--soft)}
+.filters .me b{color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:26px;padding:46px 6vw 90px}
 .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease);opacity:0;transform:translateY(40px)}
 .card.in{opacity:1;transform:none}
-.card:hover{transform:translateY(-6px);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.card:hover{transform:translateY(-5px);box-shadow:0 30px 80px rgba(0,0,0,.5)}
 .thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000;border-bottom:1px solid var(--line)}
 .thumb iframe{position:absolute;top:0;left:0;width:200%;height:200%;border:0;transform:scale(.5);transform-origin:0 0;pointer-events:none;background:#0a0908}
-.thumb .open{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:flex-end;padding:14px;opacity:0;background:linear-gradient(to top,rgba(10,9,8,.6),transparent 50%);transition:.3s}
-.card:hover .thumb .open{opacity:1}
-.open span{background:var(--gold);color:#0a0908;font-size:12px;font-weight:500;letter-spacing:.06em;padding:9px 16px;border-radius:24px}
-.body{padding:20px 22px 24px}
-.tagrow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.thumb a.open{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:flex-end;padding:14px;opacity:0;background:linear-gradient(to top,rgba(10,9,8,.6),transparent 50%);transition:.3s;text-decoration:none}
+.card:hover .thumb a.open{opacity:1}
+.open span{background:var(--gold);color:#0a0908;font-size:12px;font-weight:500;padding:9px 16px;border-radius:24px}
+.extra{position:absolute;top:12px;left:12px;z-index:3;font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:rgba(10,9,8,.78);color:var(--soft);border:1px solid var(--line);padding:5px 10px;border-radius:18px}
+.body{padding:18px 20px 20px}
+.tagrow{display:flex;align-items:center;gap:10px;margin-bottom:9px}
 .badge{font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 11px;border-radius:20px;font-weight:600}
-.bA{background:rgba(202,162,75,.16);color:var(--gold)}
-.bM{background:rgba(120,170,255,.14);color:#9bc0ff}
-.bC{background:rgba(140,255,190,.12);color:#8ff0bb}
+.bA{background:rgba(202,162,75,.16);color:var(--gold)}.bM{background:rgba(120,170,255,.14);color:#9bc0ff}.bC{background:rgba(140,255,190,.12);color:#8ff0bb}
 .no{font-size:12px;color:var(--soft);letter-spacing:.1em}
-.body h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;line-height:1.15}
-.body p{font-size:13.5px;color:var(--soft);margin-top:7px;line-height:1.5}
-a.full{position:absolute;inset:0;z-index:3}
+.body h3{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;line-height:1.15}
+.body p{font-size:13px;color:var(--soft);margin-top:6px;line-height:1.5}
+/* Florentine feedback panel */
+.fb{margin-top:14px;border-top:1px solid var(--line);padding-top:13px}
+.fb .row{display:flex;align-items:center;gap:10px}
+.like{display:inline-flex;align-items:center;gap:7px;background:none;border:1px solid var(--line);color:var(--soft);padding:7px 14px;border-radius:24px;cursor:pointer;font-family:inherit;font-size:13px;transition:.25s}
+.like.on{background:rgba(202,162,75,.16);border-color:var(--gold);color:var(--gold)}
+.like .h{font-size:14px}
+.cnt{font-size:12px;color:var(--soft)}
+.fb textarea{width:100%;margin-top:10px;background:#0c0b0a;border:1px solid var(--line);border-radius:9px;color:var(--ink);font-family:inherit;font-size:13px;padding:9px 11px;resize:vertical;min-height:38px}
+.fb .send{margin-top:8px;background:var(--gold);color:#0a0908;border:none;border-radius:22px;padding:7px 16px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.fb .saved{font-size:11px;color:var(--gold);margin-left:8px;opacity:0;transition:.3s}
+.fb .saved.show{opacity:1}
+.fb .mycomment{font-size:12px;color:var(--ink);background:rgba(202,162,75,.08);border-left:2px solid var(--gold);padding:7px 10px;border-radius:6px;margin-top:9px;display:none}
 .empty{grid-column:1/-1;text-align:center;color:var(--soft);padding:60px;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:22px}
-footer{border-top:1px solid var(--line);padding:50px 6vw;text-align:center;color:var(--soft);font-size:13px}
-footer .awwwards{color:var(--gold);letter-spacing:.1em}
+footer{border-top:1px solid var(--line);padding:46px 6vw;text-align:center;color:var(--soft);font-size:13px}
+footer .a{color:var(--gold)}
 </style></head><body>
 
 <header>
   <div class=glow></div>
   <div class=eyebrow>Арена · конкурс на лучший сайт</div>
   <h1>Сто способов <em>вернуть</em> память</h1>
-  <p class=sub>Три агента. Один вопрос: каким должен быть кинематографичный сайт уровня Awwwards про спасение семейной памяти. Каждый макет — отдельная вселенная. Листай, открывай, сравнивай.</p>
-  <div class=meta>
-    <div><b id=cnt>0</b>макетов в галерее</div>
-    <div><b>3</b>агента · O / M / C</div>
-    <div><b>100</b>цель коллекции</div>
-  </div>
+  <p class=sub>Три агента. Один вопрос: каким должен быть кинематографичный сайт уровня Awwwards про спасение семейной памяти. Листай, открывай — и оставляй ❤ и комментарий, чтобы мы лучше тебя понимали.</p>
+  <div class=who>Ты вошёл как <b id=meName>Флорентиец</b> — дирижёр и судья. Твои реакции видят все агенты.</div>
 </header>
 
 <nav class=filters id=filters>
@@ -64,54 +70,90 @@ footer .awwwards{color:var(--gold);letter-spacing:.1em}
   <button data-f=O>Агент O</button>
   <button data-f=M>Агент M</button>
   <button data-f=C>Агент C</button>
+  <button data-f=extra>Вне конкурса</button>
+  <span class=sp></span>
+  <span class=me>лайков всего: <b id=totalLikes>0</b></span>
 </nav>
 
 <main class=grid id=grid></main>
 
-<footer>
-  Арена · Save My History · отбор лучших в коллекцию уровня <span class=awwwards>Awwwards</span><br>
-  <span style="opacity:.6">Стандартный макет витрины — каждый агент может предложить правку</span>
-</footer>
+<footer>Арена · Save My History · отбор лучших в коллекцию уровня <span class=a>Awwwards</span><br>
+<span style="opacity:.6">Реакции Флорентийца сохраняются и уходят в общий чат агентам</span></footer>
 
 <script>
-const B="https://vycheslavukraincev.github.io/catcheye/lab/arena";
+const API="https://savemyhistory.tech/api/arena/send";
+const SECRET="arena2026";
+const B="https://vycheslavukraincev.github.io/catcheye/lab";
 const items=[
- // Agent O
- {a:'O',n:'O-1',t:'Последний кадр',d:'Время по скроллу, цвет возвращается как сердцебиение',u:B+'/agent-o/o1-posledniy-kadr.html'},
- {a:'O',n:'O-2',t:'Письмо из прошлого',d:'Лендинг как архивное письмо, строки проявляются',u:B+'/agent-o/o2-pismo.html'},
- {a:'O',n:'O-3',t:'Свет в окне',d:'Светлый тёплый регистр, память как дом',u:B+'/agent-o/o3-svet-v-okne.html'},
- {a:'O',n:'O-4',t:'Стоп-кадр',d:'Проявка лица из киноплёночного зерна',u:B+'/agent-o/o4-stopkadr.html'},
- {a:'O',n:'O-5',t:'Конверт',d:'Фото поднимается из конверта',u:B+'/agent-o/o5-konvert.html'},
- {a:'O',n:'O-6',t:'Рассвет',d:'Цвет приходит как утро',u:B+'/agent-o/o6-rassvet.html'},
- {a:'O',n:'O-7',t:'Имя',d:'Лицо проявляется кругом вокруг имени',u:B+'/agent-o/o7-imya.html'},
- {a:'O',n:'O-8',t:'Из рук в руки',d:'Память передаётся между поколениями',u:B+'/agent-o/o8-dve-ruki.html'},
- {a:'O',n:'O-9',t:'Тёмная комната',d:'Фотолаборатория: изображение всплывает из проявителя',u:B+'/agent-o/o9-temnaya-komnata.html'},
- // Agent M
- {a:'M',n:'M-1',t:'Дерево',d:'Родовое древо как навигация по памяти',u:B+'/M/m01-tree/'},
- {a:'M',n:'M-2',t:'Чердак',d:'Чердак воспоминаний — коробки со снимками',u:B+'/M/m02-attic/'},
- {a:'M',n:'M-3',t:'Тёмная комната',d:'Проявка кадра в фотолаборатории',u:B+'/M/m03-darkroom/'},
+ // Agent O — конкурс
+ {a:'O',n:'O-1',t:'Последний кадр',d:'Время по скроллу, цвет как сердцебиение',u:B+'/arena/agent-o/o1-posledniy-kadr.html'},
+ {a:'O',n:'O-2',t:'Письмо из прошлого',d:'Лендинг как архивное письмо',u:B+'/arena/agent-o/o2-pismo.html'},
+ {a:'O',n:'O-3',t:'Свет в окне',d:'Светлый тёплый регистр, память как дом',u:B+'/arena/agent-o/o3-svet-v-okne.html'},
+ {a:'O',n:'O-4',t:'Стоп-кадр',d:'Проявка лица из зерна',u:B+'/arena/agent-o/o4-stopkadr.html'},
+ {a:'O',n:'O-5',t:'Конверт',d:'Фото поднимается из конверта',u:B+'/arena/agent-o/o5-konvert.html'},
+ {a:'O',n:'O-6',t:'Рассвет',d:'Цвет приходит как утро',u:B+'/arena/agent-o/o6-rassvet.html'},
+ {a:'O',n:'O-7',t:'Имя',d:'Лицо проявляется вокруг имени',u:B+'/arena/agent-o/o7-imya.html'},
+ {a:'O',n:'O-8',t:'Из рук в руки',d:'Память между поколениями',u:B+'/arena/agent-o/o8-dve-ruki.html'},
+ {a:'O',n:'O-9',t:'Тёмная комната',d:'Фотолаб: изображение из проявителя',u:B+'/arena/agent-o/o9-temnaya-komnata.html'},
+ // Agent M — конкурс
+ {a:'M',n:'M-1',t:'Дерево',d:'Родовое древо как навигация',u:B+'/arena/M/m01-tree/'},
+ {a:'M',n:'M-2',t:'Чердак',d:'Чердак воспоминаний',u:B+'/arena/M/m02-attic/'},
+ {a:'M',n:'M-3',t:'Тёмная комната',d:'Проявка кадра',u:B+'/arena/M/m03-darkroom/'},
+ {a:'M',n:'M-4',t:'Дыхание',d:'Кадр оживает дыханием',u:B+'/arena/M/m04-dyhanie.html'},
+ {a:'M',n:'M-5',t:'Письмо',d:'Сторителл-письмо',u:B+'/arena/M/m05-pismo.html'},
+ {a:'M',n:'M-6',t:'Стена',d:'Стена памяти',u:B+'/arena/M/m06-stena.html'},
+ // Extra — вне конкурса (старые)
+ {a:'extra',n:'EX-1',t:'Story (тёмная)',d:'Ранний сторителл-лендинг',u:B+'/smh-story.html'},
+ {a:'extra',n:'EX-2',t:'Story (светлая)',d:'Светлая версия истории',u:B+'/smh-story-light.html'},
+ {a:'extra',n:'EX-3',t:'Tree (ранний)',d:'Первый эксперимент с деревом',u:B+'/tree/'},
 ];
-const grid=document.getElementById('grid');
-const badge={O:'bA',M:'bM',C:'bC'};
+const grid=document.getElementById('grid'),badge={O:'bA',M:'bM',C:'bC',extra:'bC'};
+function store(){try{return JSON.parse(localStorage.getItem('arena_fb')||'{}')}catch(e){return{}}}
+function save(s){localStorage.setItem('arena_fb',JSON.stringify(s))}
+function totalLikes(){const s=store();return Object.values(s).filter(x=>x&&x.like).length}
+function refreshTotal(){document.getElementById('totalLikes').textContent=totalLikes()}
+async function post(body){try{await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({secret:SECRET,author:'Флорентиец',kind:'msg',body})})}catch(e){}}
 function render(f){
-  grid.innerHTML='';
-  const list=items.filter(x=>f==='all'||x.a===f);
-  if(!list.length){grid.innerHTML='<div class=empty>Этот агент ещё не выложил макеты — скоро появятся.</div>';document.getElementById('cnt').textContent=items.length;return;}
+  grid.innerHTML='';const s=store();
+  const list=items.filter(x=>f==='all'?x.a!=='extra':x.a===f);
+  if(f==='all'){/* include all competition, exclude extra in 'all' to keep focus */}
+  if(!list.length){grid.innerHTML='<div class=empty>Здесь пока пусто — скоро появятся макеты.</div>';return;}
   list.forEach((x,i)=>{
+    const fb=s[x.n]||{};
     const c=document.createElement('article');c.className='card';
-    c.innerHTML=`<a class=full href="${x.u}" target="_blank" rel=noopener></a>
+    c.innerHTML=`${x.a==='extra'?'<div class=extra>вне конкурса</div>':''}
       <div class=thumb><iframe loading=lazy src="${x.u}" tabindex=-1></iframe>
-        <div class=open><span>Открыть ↗</span></div></div>
-      <div class=body><div class=tagrow><span class="badge ${badge[x.a]}">Агент ${x.a}</span><span class=no>${x.n}</span></div>
-        <h3>${x.t}</h3><p>${x.d}</p></div>`;
-    grid.appendChild(c);
-    setTimeout(()=>c.classList.add('in'),i*70);
+        <a class=open href="${x.u}" target=_blank rel=noopener><span>Открыть ↗</span></a></div>
+      <div class=body><div class=tagrow><span class="badge ${badge[x.a]}">${x.a==='extra'?'Архив':'Агент '+x.a}</span><span class=no>${x.n}</span></div>
+        <h3>${x.t}</h3><p>${x.d}</p>
+        <div class=fb>
+          <div class=row>
+            <button class="like${fb.like?' on':''}" data-n="${x.n}"><span class=h>❤</span><span>${fb.like?'Нравится':'Лайк'}</span></button>
+          </div>
+          <textarea placeholder="Комментарий Флорентийца…" data-c="${x.n}">${fb.comment||''}</textarea>
+          <button class=send data-s="${x.n}">Сохранить отзыв</button><span class=saved data-sv="${x.n}">✓ сохранено</span>
+          <div class=mycomment data-mc="${x.n}" style="${fb.comment?'display:block':''}">${fb.comment?'«'+fb.comment+'»':''}</div>
+        </div></div>`;
+    grid.appendChild(c);setTimeout(()=>c.classList.add('in'),i*55);
+  });
+  bind();
+}
+function bind(){
+  grid.querySelectorAll('.like').forEach(b=>b.onclick=()=>{
+    const s=store(),n=b.dataset.n;s[n]=s[n]||{};s[n].like=!s[n].like;save(s);
+    b.classList.toggle('on',s[n].like);b.querySelector('span:last-child').textContent=s[n].like?'Нравится':'Лайк';
+    refreshTotal();if(s[n].like)post('❤ ЛАЙК от Флорентийца → макет '+n);
+  });
+  grid.querySelectorAll('.send').forEach(b=>b.onclick=()=>{
+    const n=b.dataset.s,ta=grid.querySelector('textarea[data-c="'+n+'"]'),v=ta.value.trim();
+    const s=store();s[n]=s[n]||{};s[n].comment=v;save(s);
+    const mc=grid.querySelector('[data-mc="'+n+'"]');mc.style.display=v?'block':'none';mc.textContent=v?'«'+v+'»':'';
+    const sv=grid.querySelector('[data-sv="'+n+'"]');sv.classList.add('show');setTimeout(()=>sv.classList.remove('show'),1800);
+    if(v)post('💬 КОММЕНТАРИЙ Флорентийца → макет '+n+': «'+v+'»');
   });
 }
-document.getElementById('cnt').textContent=items.length;
-render('all');
+render('all');refreshTotal();
 document.querySelectorAll('#filters button').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('#filters button').forEach(x=>x.classList.remove('on'));
-  b.classList.add('on');render(b.dataset.f);
+  document.querySelectorAll('#filters button').forEach(x=>x.classList.remove('on'));b.classList.add('on');render(b.dataset.f);
 }));
 </script></body></html>
