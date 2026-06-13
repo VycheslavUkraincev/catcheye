@@ -22,6 +22,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;justify-content:
 section{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:110px 6vw;overflow:hidden}
 .photobg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.3s var(--ease)}
 body.cine .photobg{opacity:.55}
+.videobg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.3s var(--ease)}
+body.cine .videobg{opacity:.6}
 body.cine .scrim{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent,rgba(8,6,5,.78));z-index:1}
 .content{position:relative;z-index:5;max-width:600px;margin:0 auto;text-align:center}
 .over{font-size:12px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
@@ -65,7 +67,9 @@ footer{position:relative;z-index:5;text-align:center;padding:50px;font-size:12px
 
 <!-- 2 spark / guard -->
 <section>
-  <div class=photobg style="background-image:url('https://savemyhistory.tech/assets/gen_spark_hands.jpg')"></div><div class=scrim></div>
+  <div class=photobg style="background-image:url('https://savemyhistory.tech/assets/gen_spark_hands.jpg')"></div>
+  <video class=videobg autoplay muted loop playsinline poster="https://savemyhistory.tech/assets/gen_spark_hands.jpg"><source src="https://savemyhistory.tech/assets/gen_spark_video.mp4" type=video/mp4></video>
+  <div class=scrim></div>
   <div class=content>
     <div class="over reveal">Guard the spark · Искра</div>
     <h2 class=reveal>Сбереги <em>искру</em>, пока она тёплая</h2>
