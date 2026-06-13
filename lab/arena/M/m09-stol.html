@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M-09 · Стол — Save My History</title>
+<style>
+  :root{--ink:#ece3d4;--soft:#b6a892;--gold:#e0a955}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#120d08;color:#ece3d4;font-family:Georgia,serif;overflow-x:hidden}
+  /* длинный деревянный стол как горизонтальная сцена, по которой едет камера вниз по скроллу */
+  .rail{height:500vh;position:relative}
+  .cam{position:sticky;top:0;height:100vh;overflow:hidden;
+    background:
+      repeating-linear-gradient(180deg, #2a1d12 0 3px, #271a10 3px 6px),
+      linear-gradient(180deg,#3a2817,#241710)}
+  .cam::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(120% 80% at 50% 30%, transparent 40%, rgba(0,0,0,.7));pointer-events:none;z-index:9}
+  /* объекты на столе, появляются по мере скролла */
+  .item{position:absolute;left:50%;transform:translate(-50%,40px);opacity:0;
+    transition:opacity 1s ease, transform 1s ease;text-align:center;width:min(86vw,560px)}
+  .item.on{opacity:1;transform:translate(-50%,0)}
+  .item .ph{position:relative;border:10px solid #efe7d6;border-bottom-width:40px;
+    box-shadow:0 30px 70px rgba(0,0,0,.6);transform:rotate(-2deg)}
+  .item .ph img{display:block;width:100%;height:auto;filter:sepia(.25) contrast(.95)}
+  .item.on .ph img{animation:heal 2.4s forwards}
+  @keyframes heal{to{filter:none}}
+  .item h2{margin-top:30px;font-size:clamp(24px,4vw,44px);font-weight:400}
+  .item p{margin-top:14px;color:#b6a892;font-size:clamp(14px,1.8vw,18px);line-height:1.7;max-width:44ch;margin-inline:auto}
+  .eyebrow{font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  .gold{color:var(--gold)}
+  /* интро/финал */
+  .pad{height:100vh;display:grid;place-items:center;text-align:center;padding:8vw;position:relative;z-index:10}
+  .pad h1{font-size:clamp(38px,7vw,82px);font-weight:400;line-height:1}
+  .pad p{margin-top:22px;color:#b6a892;max-width:42ch;font-size:18px;line-height:1.7}
+  .cta{margin-top:36px;display:inline-block;padding:18px 46px;background:var(--gold);color:#120d08;
+    text-decoration:none;letter-spacing:.16em;text-transform:uppercase;font-size:13px}
+  .hint{position:fixed;bottom:22px;left:0;right:0;text-align:center;font-size:11px;letter-spacing:.3em;
+    color:rgba(236,227,212,.4);text-transform:uppercase;z-index:20}
+</style>
+</head>
+<body>
+  <section class="pad">
+    <div>
+      <div class="eyebrow">Family Table</div>
+      <h1>Фамильный стол<br><span class="gold">помнит всех.</span></h1>
+      <p>Пройдите по нему — снимок за снимком, поколение за поколением.</p>
+    </div>
+  </section>
+
+  <section class="rail" id="rail">
+    <div class="cam">
+      <div class="item" data-at="0.10">
+        <div class="ph"><img src="https://smh-photos.fra1.digitaloceanspaces.com/assets/g2_after.jpg" alt=""></div>
+        <div style="margin-top:24px"><div class="eyebrow">1971 · свадьба</div>
+        <h2>Здесь начинался <span class="gold">род</span>.</h2>
+        <p>Семейный альбом живёт недолго. Мы возвращаем чёткость там, где она начала угасать.</p></div>
+      </div>
+      <div class="item" data-at="0.42">
+        <div class="ph"><img src="https://smh-photos.fra1.digitaloceanspaces.com/assets/g3_after.jpg" alt=""></div>
+        <div style="margin-top:24px"><div class="eyebrow">Двор детства</div>
+        <h2>Исцеление, <span class="gold">а не ретушь</span>.</h2>
+        <p>Восстанавливаем анатомию лиц и глубину взгляда с точностью до 98%. В 4K.</p></div>
+      </div>
+      <div class="item" data-at="0.74">
+        <div class="ph"><img src="https://smh-photos.fra1.digitaloceanspaces.com/assets/g4_after.jpg" alt=""></div>
+        <div style="margin-top:24px"><div class="eyebrow">Отец · молодой</div>
+        <h2>Подарок, который <span class="gold">невозможно забыть</span>.</h2>
+        <p>Лучшее, что можно подарить родителям — встреча с их молодостью.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div>
+      <h1 style="font-size:clamp(30px,5vw,58px)">Не оставляйте <span class="gold">на «потом»</span>.</h1>
+      <p>Спасённая сегодня фотография станет бесценной реликвией через 10 лет.</p>
+      <a class="cta" href="#">Оживить мой семейный архив</a>
+    </div>
+  </section>
+
+  <div class="hint">скролл — движение по столу</div>
+<script>
+  const rail=document.getElementById('rail');
+  const items=[...document.querySelectorAll('.item')];
+  function onScroll(){
+    const r=rail.getBoundingClientRect();
+    const total=rail.offsetHeight-innerHeight;
+    const p=Math.min(1,Math.max(0,(-r.top)/total));
+    items.forEach(it=>{
+      const at=parseFloat(it.dataset.at);
+      const show=p>=at-.12 && p<=at+.22;
+      it.classList.toggle('on',show);
+    });
+    if(scrollY>40)document.querySelector('.hint').style.opacity=0;
+  }
+  addEventListener('scroll',onScroll); onScroll();
+</script>
+</body>
+</html>
