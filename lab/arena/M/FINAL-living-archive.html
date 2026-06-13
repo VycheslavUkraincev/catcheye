@@ -57,10 +57,17 @@
   /* counter + map */
   .counter{font-size:clamp(46px,11vw,130px);color:var(--gold);line-height:1}
   .counter small{display:block;font-size:13px;letter-spacing:.3em;color:var(--soft);text-transform:uppercase;margin-top:14px}
-  .map{position:relative;width:min(92vw,820px);height:min(46vw,380px);margin:26px auto 0;border:1px solid var(--line);
-    border-radius:12px;overflow:hidden;background:radial-gradient(120% 120% at 50% 40%,rgba(201,136,63,.06),transparent 60%)}
-  .dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 2.4s infinite}
-  @keyframes pulse{0%{transform:scale(.4);opacity:.3}50%{transform:scale(1.3);opacity:1}100%{transform:scale(.4);opacity:.3}}
+  .map{position:relative;width:min(94vw,860px);margin:26px auto 0;border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;background:radial-gradient(120% 120% at 50% 40%,rgba(201,136,63,.06),transparent 60%);padding:18px}
+  .map svg.world{width:100%;height:auto;display:block}
+  .map .land{fill:var(--line);opacity:.55}
+  [data-mode="cinematic"] .map .land{fill:#2f2718;opacity:.8}
+  .city{fill:var(--gold);animation:pulse 2.6s infinite}
+  .city.c2{animation-delay:.5s}.city.c3{animation-delay:1s}.city.c4{animation-delay:1.5s}.city.c5{animation-delay:.8s}
+  .cityHalo{fill:var(--gold);opacity:.18;animation:halo 2.6s infinite}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+  @keyframes halo{0%{r:2;opacity:.4}70%{r:14;opacity:0}100%{opacity:0}}
+  .cityLabel{fill:var(--soft);font-size:9px;font-family:Georgia,serif;letter-spacing:.04em}
   /* levels */
   .levels{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:920px;margin:36px auto 0}
   @media(max-width:760px){.levels{grid-template-columns:repeat(2,1fr)}}
@@ -125,7 +132,19 @@
   <section><div class="reveal">
     <div class="eyebrow">Движение · прямо сейчас в мире</div>
     <div class="counter"><span id="num">1 247</span><small>родов уже спасено · 38 стран</small></div>
-    <div class="map" id="map"></div>
+    <div class="map">
+      <svg class="world" viewBox="0 0 1000 480" id="world">
+        <!-- stylised continents (soft blobs) -->
+        <path class="land" d="M120,120 C90,150 80,210 110,250 C100,300 140,340 180,330 C200,360 240,360 250,320 C290,300 300,250 270,220 C300,180 280,130 230,120 C200,90 150,95 120,120 Z"/>
+        <path class="land" d="M250,330 C240,360 260,410 300,440 C320,470 360,470 360,430 C390,410 380,360 350,350 C320,330 280,320 250,330 Z"/>
+        <path class="land" d="M470,120 C450,150 455,200 480,210 C470,250 500,270 520,250 C540,275 575,265 575,235 C600,225 600,180 575,170 C580,135 540,115 510,125 C495,110 480,110 470,120 Z"/>
+        <path class="land" d="M520,250 C505,300 520,380 560,430 C580,460 615,455 615,415 C640,380 625,320 600,300 C585,270 550,250 520,250 Z"/>
+        <path class="land" d="M600,150 C580,180 590,230 630,250 C660,290 720,300 760,270 C810,260 840,210 810,175 C820,140 770,110 720,125 C680,110 630,120 600,150 Z"/>
+        <path class="land" d="M800,360 C780,380 790,420 830,425 C865,430 885,400 865,375 C850,350 820,345 800,360 Z"/>
+        <!-- diaspora cities -->
+        <g id="cities"></g>
+      </svg>
+    </div>
     <p class="lead" style="margin-top:24px">Каждая вспышка — спасённое фото. Украинец в Торонто, поляк в Чикаго, грузин в Берлине — мы делаем одно общее дело: не даём прошлому исчезнуть.</p>
   </div></section>
 
@@ -176,9 +195,23 @@
 
   const num=document.getElementById('num');let v=1247;
   setInterval(()=>{v+=Math.floor(Math.random()*3);num.textContent=v.toLocaleString('ru-RU');},1900);
-  const map=document.getElementById('map');
-  function spawn(){const d=document.createElement('div');d.className='dot';d.style.left=(8+Math.random()*84)+'%';d.style.top=(12+Math.random()*70)+'%';d.style.animationDelay=(Math.random()*2)+'s';map.appendChild(d);if(map.querySelectorAll('.dot').length>36)map.querySelector('.dot').remove();}
-  for(let i=0;i<22;i++)spawn();setInterval(spawn,1300);
+  // diaspora cities on world map
+  const cities=[
+    {x:175,y:175,n:'Торонто'},{x:200,y:230,n:'Чикаго'},{x:300,y:300,n:'Сан-Паулу'},
+    {x:505,y:150,n:'Лондон'},{x:560,y:165,n:'Варшава'},{x:585,y:175,n:'Киев'},
+    {x:600,y:180,n:'Берлин'},{x:760,y:200,n:'Алматы'},{x:840,y:400,n:'Сидней'},
+    {x:620,y:300,n:'Тель-Авив'}
+  ];
+  const g=document.getElementById('cities');const svgns='http://www.w3.org/2000/svg';
+  cities.forEach((c,i)=>{
+    const halo=document.createElementNS(svgns,'circle');halo.setAttribute('class','cityHalo');
+    halo.setAttribute('cx',c.x);halo.setAttribute('cy',c.y);halo.setAttribute('r',3);
+    halo.style.animationDelay=(i*0.3)+'s';g.appendChild(halo);
+    const dot=document.createElementNS(svgns,'circle');dot.setAttribute('class','city c'+((i%5)+1));
+    dot.setAttribute('cx',c.x);dot.setAttribute('cy',c.y);dot.setAttribute('r',3);g.appendChild(dot);
+    const t=document.createElementNS(svgns,'text');t.setAttribute('class','cityLabel');
+    t.setAttribute('x',c.x+7);t.setAttribute('y',c.y+3);t.textContent=c.n;g.appendChild(t);
+  });
 
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');}}),{threshold:.2});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
