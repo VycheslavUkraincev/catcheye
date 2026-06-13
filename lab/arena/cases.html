@@ -1,0 +1,81 @@
+<!doctype html><html lang=ru><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Банк кейсов · до/после · Save My History</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel=stylesheet>
+<style>
+:root{--bg:#0b0a08;--card:#141210;--ink:#f2ebdd;--soft:#9c8f78;--gold:#cda94f;--line:rgba(205,169,79,.2);--ease:cubic-bezier(.22,.61,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:Inter,sans-serif}
+header{text-align:center;padding:70px 6vw 30px}
+.kick{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(34px,7vw,76px);line-height:1}
+h1 em{font-style:italic;color:var(--gold)}
+.sub{color:var(--soft);max-width:640px;margin:20px auto 0;font-weight:300;line-height:1.6;font-size:15px}
+.rule{max-width:760px;margin:28px auto 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 26px;text-align:left}
+.rule b{color:var(--gold)}
+.rule p{color:var(--soft);font-size:14px;line-height:1.6;margin-top:6px}
+.grid{max-width:1200px;margin:50px auto;padding:0 5vw;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
+.case{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.cmp{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:ew-resize;user-select:none}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%}
+.cmp .after{clip-path:inset(0 0 0 50%)}
+.cmp .seam{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--gold);box-shadow:0 0 14px var(--gold);z-index:3}
+.cmp .grip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:4;background:var(--gold);color:#0b0a08;border-radius:30px;font-size:11px;font-weight:600;padding:5px 12px;letter-spacing:.05em}
+.cmp .tag{position:absolute;bottom:10px;z-index:3;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.5);padding:4px 9px;border-radius:20px}
+.cmp .tb{left:10px}.cmp .ta{right:10px;color:var(--gold)}
+.meta{padding:16px 18px}
+.meta .t{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600}
+.meta .d{font-size:12.5px;color:var(--soft);margin-top:3px}
+.meta .nat{display:inline-block;margin-top:9px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:20px;padding:3px 10px}
+.use{font-size:11px;color:var(--soft);margin-top:9px;font-style:italic}
+footer{text-align:center;padding:40px;color:var(--soft);font-size:12px}
+a.back{color:var(--gold);text-decoration:none;font-size:13px}
+</style></head><body>
+<header>
+  <div class=kick>Save My History · банк реальных кейсов</div>
+  <h1>До и <em>после</em> — настоящие истории</h1>
+  <p class=sub>Отобранные кадры из реставрации архива Онуфрия: семейные, тёплые, в национальном характере. Тяни ползунок — увидишь, как возвращается лицо.</p>
+  <div class=rule>
+    <b>📌 Правило для агентов (R5):</b>
+    <p>В макетах используйте кадры из этого банка <b>эффективно</b> — как фото-фон, hero, секцию «доверие». Кадры с вышиванками и свадьбами — ко Дню вышиванки и темам рода. <b>Либо</b> генерируйте свои реалистичные фоны (ультрареализм) и складывайте в общий банк. Никаких стоковых плейсхолдеров.</p>
+  </div>
+</header>
+
+<div class=grid id=grid></div>
+<footer><a class=back href="./board.html">← Табло выставки</a> · <a class=back href="./">Галерея макетов</a></footer>
+
+<script>
+const A='https://savemyhistory.tech/assets/';
+const cases=[
+ {id:'o110',t:'Большая семья',d:'Многопоколенный портрет',nat:'',use:'hero · «род»'},
+ {id:'o55',t:'Свадьба в платке',d:'Свадебная пара и родня',nat:'Нац. характер',use:'тема рода · вышиванка'},
+ {id:'o45',t:'Сельская свадьба',d:'Семейная группа',nat:'Нац. характер',use:'День вышиванки'},
+ {id:'o85',t:'Мать и дети',d:'Самый тёплый кадр',nat:'',use:'эмоция · Family Pass'},
+ {id:'o5',t:'Семейный портрет',d:'Шесть лиц рода',nat:'',use:'секция доверия'},
+ {id:'o15',t:'Пара с ребёнком',d:'Молодая семья',nat:'',use:'нежность · подарок'},
+ {id:'o65',t:'Семья за столом',d:'Домашний вечер',nat:'',use:'тепло дома'},
+ {id:'o95',t:'Три женщины',d:'Сёстры / подруги',nat:'',use:'женские истории'},
+];
+grid.innerHTML=cases.map(c=>`<div class=case>
+  <div class=cmp data-id="${c.id}">
+    <img class=before src="${A}case_${c.id}_before.jpg" alt="до">
+    <img class=after src="${A}case_${c.id}_after.jpg" alt="после">
+    <div class=tag tb>До</div><div class="tag ta" style="right:10px">После</div>
+    <div class=seam></div><div class=grip>↔</div>
+  </div>
+  <div class=meta>
+    <div class=t>${c.t}</div><div class=d>${c.d}</div>
+    ${c.nat?`<span class=nat>🇺🇦 ${c.nat}</span>`:''}
+    <div class=use>↳ ${c.use}</div>
+  </div></div>`).join('');
+document.querySelectorAll('.cmp').forEach(cmp=>{
+  const after=cmp.querySelector('.after'),seam=cmp.querySelector('.seam'),grip=cmp.querySelector('.grip');
+  function set(x){const r=cmp.getBoundingClientRect();let p=(x-r.left)/r.width;p=Math.max(0,Math.min(1,p));after.style.clipPath=`inset(0 0 0 ${p*100}%)`;seam.style.left=grip.style.left=(p*100)+'%';}
+  let drag=false;
+  cmp.addEventListener('mousedown',e=>{drag=true;set(e.clientX);});
+  addEventListener('mousemove',e=>{if(drag)set(e.clientX);});
+  addEventListener('mouseup',()=>drag=false);
+  cmp.addEventListener('mousemove',e=>{if(!drag)set(e.clientX);});
+  cmp.addEventListener('touchmove',e=>{set(e.touches[0].clientX);},{passive:true});
+});
+</script></body></html>
