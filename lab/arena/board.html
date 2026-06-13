@@ -94,7 +94,8 @@ const stages=[
  {n:'Этап 1',name:'Раскрутка',st:'Раунды 1–3 · 9 макетов O',done:true},
  {n:'Этап 2',name:'Бриф вкуса',st:'Манифест · Хранитель · 2 режима',done:true},
  {n:'Этап 3',name:'Хранитель',st:'R4 · тон Хранителя + переключатель',done:true},
- {n:'Этап 4',name:'Кинематограф',st:'R5 · РЕАЛЬНАЯ генерация фонов · ультрареализм',active:true},
+ {n:'Этап 4',name:'Кинематограф',st:'R5 · 4 метафоры + видео-фон',done:true},
+ {n:'Этап 5',name:'Финальная сборка',st:'R6 · ОДИН цельный сайт · лучшее вместе',active:true},
  {n:'Финал',name:'Гран-при',st:'Лучший из 9 → на Awwwards',done:false},
 ];
 document.getElementById('stages').innerHTML=stages.map(s=>`<div class="stage ${s.active?'active':''} ${s.done?'done':''}"><div class=num>${s.n}</div><div class=name>${s.name}</div><div class=st>${s.done?'✓ ':''}${s.st}</div></div>`).join('');
