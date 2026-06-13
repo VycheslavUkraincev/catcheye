@@ -80,9 +80,27 @@
   .rew .r span{color:var(--soft);font-size:15px}.rew .r b{color:var(--gold);font-weight:400;white-space:nowrap}
   /* tree */
   .tree-wrap{min-height:120vh}
-  .tree{width:min(90vw,520px)}
-  .tree path,.tree line{stroke:var(--gold);fill:none;stroke-width:1.4;stroke-dasharray:1600;stroke-dashoffset:1600;transition:stroke-dashoffset 2s ease}
-  .tree.grow path,.tree.grow line{stroke-dashoffset:0}
+  /* interactive family tree */
+  .gprogress{max-width:480px;margin:8px auto 0}
+  .gbar{height:6px;border-radius:6px;background:var(--line);overflow:hidden}
+  .gbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#fff3d8);transition:width .8s}
+  .gmeta{display:flex;justify-content:space-between;margin-top:9px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--soft)}
+  .gmeta .grank{color:var(--gold)}
+  .field{position:relative;width:min(92vw,560px);aspect-ratio:4/5;margin:4vh auto 0}
+  .field svg.br{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+  .field svg.br path{fill:none;stroke:var(--line);stroke-width:2}
+  .gnode{position:absolute;width:54px;height:68px;transform:translate(-50%,-50%);z-index:2;cursor:pointer;
+    border:3px solid var(--line);border-radius:6px;overflow:hidden;background:rgba(0,0,0,.3);
+    display:grid;place-items:center;transition:.4s}
+  .gnode.filled{border-color:var(--gold);box-shadow:0 0 20px rgba(224,169,85,.5)}
+  .gnode img{width:100%;height:100%;object-fit:cover;opacity:0;transition:.6s}
+  .gnode.filled img{opacity:1}
+  .gnode .plus{position:absolute;color:var(--soft);font-size:24px;font-weight:300}
+  .gnode.filled .plus{opacity:0}
+  .gnode:hover{transform:translate(-50%,-50%) scale(1.08);border-color:var(--gold)}
+  .gnode .lbl{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:9px;letter-spacing:.08em;color:var(--soft);text-transform:uppercase}
+  .gtoast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(80px);background:var(--gold);color:#0c0a09;padding:12px 24px;border-radius:30px;font-size:13px;opacity:0;transition:.5s;z-index:90}
+  .gtoast.show{transform:translateX(-50%) translateY(0);opacity:1}
   .reveal{opacity:0;transform:translateY(32px);transition:1s cubic-bezier(.16,1,.3,1)}
   .reveal.on{opacity:1;transform:none}
   footer{padding:8vh 7vw 12vh;text-align:center;position:relative;z-index:10}
@@ -168,19 +186,23 @@
   </div></section>
 
   <!-- 6 ФИНАЛ / дерево (крона М + корни О) -->
-  <section class="tree-wrap" id="join"><div class="reveal">
-    <div class="eyebrow">Огонь — дальше</div>
-    <h1 style="font-size:clamp(30px,5vw,60px)">Хранитель — <span class="gold">это ты.</span></h1>
-    <svg class="tree" id="tree" viewBox="0 0 400 320">
-      <line x1="200" y1="320" x2="200" y2="170"/>
-      <path d="M200,200 C150,170 120,120 90,80"/><path d="M200,200 C250,170 280,120 310,80"/>
-      <path d="M200,170 C170,140 160,100 150,60"/><path d="M200,170 C230,140 240,100 250,60"/>
-      <path d="M200,150 C200,110 200,90 200,40"/>
-      <path d="M200,320 C160,300 140,290 110,300"/><path d="M200,320 C240,300 260,290 290,300"/>
-    </svg>
-    <p class="lead">Сбереги сегодня — и через десять лет это станет реликвией рода. Передай детям их настоящую историю.</p>
-    <a class="cta" href="#">Хранить мой семейный архив</a>
+  <section class="tree-wrap" id="join"><div class="reveal" style="width:100%;max-width:680px">
+    <div class="eyebrow">Огонь — дальше · собери свой род</div>
+    <h1 style="font-size:clamp(30px,5vw,58px)">Хранитель — <span class="gold">это ты.</span></h1>
+    <p class="lead">Нажми на пустую ветку — восстанови фото — и предок займёт своё место.</p>
+    <div class="gprogress"><div class="gbar"><i id="gfill"></i></div>
+      <div class="gmeta"><span id="gcnt">0 / 7 восстановлено</span><span class="grank" id="grank">🥉 Хранитель искры</span></div></div>
+    <div class="field" id="gfield">
+      <svg class="br" viewBox="0 0 400 500" preserveAspectRatio="none">
+        <path d="M200,470 L200,300"/><path d="M200,320 C150,300 110,260 90,210"/>
+        <path d="M200,320 C250,300 290,260 310,210"/><path d="M200,250 C170,220 150,180 140,120"/>
+        <path d="M200,250 C230,220 250,180 260,120"/><path d="M90,210 C80,170 80,140 80,100"/>
+        <path d="M310,210 C320,170 320,140 320,100"/>
+      </svg>
+    </div>
+    <a class="cta" href="#" style="margin-top:8vh">Хранить весь род · Family Pass</a>
   </div></section>
+  <div class="gtoast" id="gtoast">+1 предок · +1 кредит ✨</div>
 
   <footer><p style="color:var(--soft);letter-spacing:.2em;font-size:12px">SAVE MY HISTORY · THE LIVING ARCHIVE</p></footer>
 
@@ -215,8 +237,27 @@
 
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');}}),{threshold:.2});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  const tio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)document.getElementById('tree').classList.add('grow')}),{threshold:.4});
-  tio.observe(document.querySelector('.tree-wrap'));
+
+  // interactive family tree game
+  const gnodes=[
+    {x:50,y:62,n:'Ты',k:'hero'},{x:22,y:44,n:'Мама',k:'g1'},{x:78,y:44,n:'Папа',k:'g2'},
+    {x:34,y:24,n:'Бабушка',k:'g3'},{x:66,y:24,n:'Дедушка',k:'g4'},
+    {x:20,y:20,n:'Прабаба',k:'g1'},{x:80,y:20,n:'Прадед',k:'g2'}
+  ];
+  const gbase='https://smh-photos.fra1.digitaloceanspaces.com/assets/';
+  const gfield=document.getElementById('gfield');
+  const gfill=document.getElementById('gfill'),gcnt=document.getElementById('gcnt'),
+        grank=document.getElementById('grank'),gtoast=document.getElementById('gtoast');
+  let gdone=0;const gtot=gnodes.length;
+  const grankFor=d=>d>=7?'💎 Хранитель наследия':d>=5?'🥇 Хранитель рода':d>=3?'🥈 Хранитель памяти':'🥉 Хранитель искры';
+  const gupd=()=>{gfill.style.width=(gdone/gtot*100)+'%';gcnt.textContent=gdone+' / '+gtot+' восстановлено';grank.textContent=grankFor(gdone);};
+  gnodes.forEach(nd=>{
+    const el=document.createElement('div');el.className='gnode';el.style.left=nd.x+'%';el.style.top=nd.y+'%';
+    el.innerHTML='<span class="plus">+</span><img src="'+gbase+nd.k+'_after.jpg" alt=""><span class="lbl">'+nd.n+'</span>';
+    el.addEventListener('click',()=>{if(el.classList.contains('filled'))return;el.classList.add('filled');gdone++;gupd();gtoast.classList.add('show');setTimeout(()=>gtoast.classList.remove('show'),1500);});
+    gfield.appendChild(el);
+  });
+  gupd();
 </script>
 </body>
 </html>
