@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M-11 · Путь сквозь время — Save My History</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#f4ece0;color:#1a1410;font-family:Georgia,serif;overflow-x:hidden}
+  .intro{height:90vh;display:grid;place-items:center;text-align:center;padding:8vw}
+  .eyebrow{font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:#c9883f;margin-bottom:20px}
+  .intro h1{font-size:clamp(36px,6.5vw,82px);font-weight:400;line-height:1}
+  .gold{color:#c9883f}
+  /* горизонтальная лента времени, скроллим по странице -> едет вбок */
+  .track{position:relative;height:380vh}
+  .stick{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center}
+  .row{display:flex;gap:8vw;padding:0 12vw;will-change:transform}
+  .era{flex:0 0 auto;width:min(62vw,420px);text-align:center}
+  .era .ph{position:relative;aspect-ratio:4/5;border:8px solid #fff;
+    box-shadow:0 24px 60px rgba(0,0,0,.2);overflow:hidden}
+  .era .ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(.5) sepia(.2)}
+  .era .yr{position:absolute;top:14px;left:14px;background:#1a1410;color:#f4ece0;
+    font-size:12px;letter-spacing:.2em;padding:7px 12px}
+  .era h3{margin-top:22px;font-size:clamp(22px,3vw,34px);font-weight:400}
+  .era p{margin-top:10px;color:#6f6457;font-size:15px;line-height:1.6}
+  .line{position:absolute;top:50%;left:0;height:2px;width:100%;
+    background:linear-gradient(90deg,transparent,#c9883f,transparent);opacity:.5}
+  .outro{min-height:90vh;display:grid;place-items:center;text-align:center;padding:8vw}
+  .outro h2{font-size:clamp(28px,5vw,56px);font-weight:400;max-width:18ch}
+  .cta{margin-top:32px;display:inline-block;padding:18px 46px;background:#c9883f;color:#f4ece0;
+    text-decoration:none;letter-spacing:.16em;text-transform:uppercase;font-size:13px}
+  .hint{position:fixed;bottom:22px;left:0;right:0;text-align:center;font-size:11px;letter-spacing:.3em;
+    color:rgba(26,20,16,.4);text-transform:uppercase}
+</style>
+</head>
+<body>
+  <section class="intro"><div>
+    <div class="eyebrow">Journey through time</div>
+    <h1>Сто лет вашей семьи —<br><span class="gold">в одной ленте.</span></h1>
+  </div></section>
+
+  <section class="track" id="track">
+    <div class="stick">
+      <div class="line"></div>
+      <div class="row" id="row">
+        <div class="era"><div class="ph"><span class="yr">1924</span><img src="https://smh-photos.fra1.digitaloceanspaces.com/assets/g1_before.jpg"></div>
+          <h3>Прабабушка</h3><p>Стеклянная пластина. Почти стёрта временем.</p></div>
+        <div class="era"><div class="ph"><span class="yr">1958</span><img src="https://smh-photos.fra1.digitaloceanspaces.com/assets/g2_before.jpg"></div>
+          <h3>Свадьба</h3><p>Заломы, пятна, выцветший угол.</p></div>
+        <div class="era"><div class="ph"><span class="yr">1981</span><img src="https://smh-photos.fra1.digitaloceanspaces.com/assets/g3_after.jpg"></div>
+          <h3>Двор детства</h3><p>Восстановлено в 4K. Резкость вернулась.</p></div>
+        <div class="era"><div class="ph"><span class="yr">2024</span><img src="https://smh-photos.fra1.digitaloceanspaces.com/assets/g4_after.jpg"></div>
+          <h3>Сегодня</h3><p>Та же семья. Та же нить. Ничего не потеряно.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="outro"><div>
+    <h2>Соберите <span class="gold">всю ленту рода</span> в один вечер.</h2>
+    <a class="cta" href="#">Оцифровать архив</a>
+  </div></section>
+
+  <div class="hint">скролл — движение по времени</div>
+<script>
+  const track=document.getElementById('track'), row=document.getElementById('row');
+  function onScroll(){
+    const r=track.getBoundingClientRect();
+    const total=track.offsetHeight-innerHeight;
+    const p=Math.min(1,Math.max(0,(-r.top)/total));
+    const max=row.scrollWidth-innerWidth+ innerWidth*0.0;
+    const shift=(row.scrollWidth-innerWidth)*p;
+    row.style.transform=`translateX(${-shift}px)`;
+    if(scrollY>40)document.querySelector('.hint').style.opacity=0;
+  }
+  addEventListener('scroll',onScroll);addEventListener('resize',onScroll);onScroll();
+</script>
+</body>
+</html>

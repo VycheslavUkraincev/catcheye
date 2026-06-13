@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M-10 · Кинцуги — Save My History</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0b0a0c;color:#f0e9dc;font-family:Georgia,serif;overflow-x:hidden}
+  .intro{height:100vh;display:grid;place-items:center;text-align:center;padding:8vw}
+  .intro .eyebrow{font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:#e0a955;margin-bottom:22px}
+  .intro h1{font-size:clamp(38px,7vw,88px);font-weight:400;line-height:1}
+  .intro .gold{color:#e0a955}
+  .intro p{margin-top:24px;color:#9a8f7f;max-width:46ch;font-size:18px;line-height:1.7}
+  .scene{height:320vh;position:relative}
+  .sticky{position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden}
+  .frame{position:relative;width:min(82vw,460px);aspect-ratio:4/5;
+    box-shadow:0 40px 120px rgba(0,0,0,.7)}
+  .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .frame .after{opacity:0;transition:opacity .1s linear}
+  svg.cracks{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+  svg.cracks path{fill:none;stroke:#e6b25c;stroke-width:2.4;stroke-linecap:round;
+    filter:drop-shadow(0 0 6px rgba(230,178,92,.9));
+    stroke-dasharray:var(--l);stroke-dashoffset:var(--l)}
+  .cap{position:absolute;bottom:8vh;left:0;right:0;text-align:center;z-index:6;pointer-events:none}
+  .cap h2{font-size:clamp(22px,4vw,44px);font-weight:400}
+  .cap p{margin-top:10px;color:#9a8f7f;letter-spacing:.08em}
+  .outro{min-height:100vh;display:grid;place-items:center;text-align:center;padding:8vw}
+  .outro h2{font-size:clamp(28px,5vw,58px);font-weight:400;line-height:1.15;max-width:18ch}
+  .gold{color:#e0a955}
+  .cta{margin-top:34px;display:inline-block;padding:18px 46px;background:#e0a955;color:#0b0a0c;
+    text-decoration:none;letter-spacing:.16em;text-transform:uppercase;font-size:13px}
+</style>
+</head>
+<body>
+  <section class="intro"><div>
+    <div class="eyebrow">Kintsugi · 金継ぎ</div>
+    <h1>Трещину не прячут.<br><span class="gold">Её золотят.</span></h1>
+    <p>Японцы чинят разбитую керамику золотом — и поломка становится самым красивым в вещи. Мы делаем так же с вашей памятью.</p>
+  </div></section>
+
+  <section class="scene" id="scene">
+    <div class="sticky">
+      <div class="frame">
+        <img class="before" src="https://smh-photos.fra1.digitaloceanspaces.com/assets/g3_before.jpg" alt="">
+        <img class="after"  id="after" src="https://smh-photos.fra1.digitaloceanspaces.com/assets/g3_after.jpg" alt="">
+        <svg class="cracks" viewBox="0 0 100 125" preserveAspectRatio="none">
+          <path id="c1" d="M50,-2 C46,20 58,34 50,52 C44,68 56,84 50,127"/>
+          <path id="c2" d="M50,40 C62,46 74,42 92,50"/>
+          <path id="c3" d="M50,60 C38,66 24,62 6,72"/>
+          <path id="c4" d="M50,80 C60,88 70,92 86,100"/>
+        </svg>
+      </div>
+      <div class="cap"><h2 id="cap">Трещина времени</h2><p id="capSub">прокрутите — золото затянет её</p></div>
+    </div>
+  </section>
+
+  <section class="outro"><div>
+    <h2>То, что было сломано, <span class="gold">становится бесценным</span>.</h2>
+    <a class="cta" href="#">Позолотить свою историю</a>
+  </div></section>
+
+<script>
+  const scene=document.getElementById('scene'), after=document.getElementById('after');
+  const cap=document.getElementById('cap'), capSub=document.getElementById('capSub');
+  const cracks=[...document.querySelectorAll('.cracks path')];
+  cracks.forEach(p=>{const l=p.getTotalLength();p.style.setProperty('--l',l);p.style.strokeDasharray=l;p.style.strokeDashoffset=l;});
+  function onScroll(){
+    const r=scene.getBoundingClientRect();
+    const total=scene.offsetHeight-innerHeight;
+    const p=Math.min(1,Math.max(0,(-r.top)/total));
+    // золото заполняет трещины
+    cracks.forEach((path,i)=>{
+      const l=path.getTotalLength();
+      const seg=Math.min(1,Math.max(0,(p-i*0.12)/0.5));
+      path.style.strokeDashoffset=l*(1-seg);
+    });
+    // after проявляется во второй половине
+    after.style.opacity=Math.max(0,(p-.5)/.5);
+    if(p<.33){cap.textContent="Трещина времени";capSub.textContent="прокрутите — золото затянет её";}
+    else if(p<.7){cap.textContent="Золото входит в раны";capSub.textContent="мы не прячем повреждение";}
+    else{cap.textContent="Целое. Дороже прежнего";capSub.textContent="красота несовершенства";}
+  }
+  addEventListener('scroll',onScroll);onScroll();
+</script>
+</body>
+</html>
