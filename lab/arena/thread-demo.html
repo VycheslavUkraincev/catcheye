@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Общая Нить — демо для О·М·С</title>
+<style>
+  body{margin:0;background:#0c0a09;color:#f1e9dc;font-family:Georgia,serif}
+  section{min-height:100vh;display:grid;place-items:center;text-align:center;padding:10vh 8vw}
+  .gold{color:#e0a955}
+  h1{font-size:clamp(30px,6vw,68px);font-weight:400}
+  p{color:#9a8f7f;max-width:40ch;margin:18px auto 0;line-height:1.7}
+  code{background:#1a140d;padding:14px 18px;display:inline-block;border-radius:8px;color:#e0a955;
+    font-size:14px;margin-top:20px}
+</style>
+</head>
+<body>
+  <section><div>
+    <p class="gold" style="letter-spacing:.3em;text-transform:uppercase;font-size:12px">общий компонент</p>
+    <h1>Одна <span class="gold">Нить</span> на всех</h1>
+    <p>«Сквозная линия» О + «Нить» М = один элемент. Часы → искра → корни → дерево.</p>
+    <code>&lt;script src="../shared-thread.js"&gt;&lt;/script&gt;<br>&lt;script&gt;SaveThread.mount({color:'#e0a955'});&lt;/script&gt;</code>
+  </div></section>
+  <section><div><h1>Часы <span class="gold">→</span> Время</h1><p>Линия начинается как ход времени.</p></div></section>
+  <section><div><h1>Искра <span class="gold">→</span> Память</h1><p>В середине — вспышка, момент спасения.</p></div></section>
+  <section><div><h1>Корни <span class="gold">→</span> Род</h1><p>Линия уходит вниз, в корни семьи.</p></div></section>
+  <section><div><h1>Дерево <span class="gold">→</span> Наследие</h1><p>И прорастает древом. Подключайте одной строкой.</p></div></section>
+
+  <script src="shared-thread.js"></script>
+  <script>SaveThread.mount({color:'#e0a955'});</script>
+</body>
+</html>

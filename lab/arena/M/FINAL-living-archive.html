@@ -112,9 +112,7 @@
   <header><div class="logo">SAVE</div>
     <nav><a>Хранитель</a><a>Метод</a><a>Family Pass</a><a>Движение</a><a>Войти</a></nav></header>
 
-  <svg class="thread" id="thread" viewBox="0 0 140 4600" preserveAspectRatio="xMidYMin slice">
-    <path id="tp" d="M70,0 C70,400 20,650 70,1000 C120,1350 120,1650 70,2000 C20,2350 20,2650 70,3000 C120,3350 110,3650 70,4000 C40,4300 70,4500 70,4600"/>
-  </svg>
+  <!-- сквозная нить = общий компонент SaveThread (объединил линию О + Нить М) -->
 
   <!-- 1 HERO / ХРАНИТЕЛЬ (тон О) -->
   <section><div class="hero-grid reveal on">
@@ -206,14 +204,15 @@
 
   <footer><p style="color:var(--soft);letter-spacing:.2em;font-size:12px">SAVE MY HISTORY · THE LIVING ARCHIVE</p></footer>
 
+<script src="../shared-thread.js"></script>
 <script>
   const body=document.body,bMin=document.getElementById('bMin'),bCin=document.getElementById('bCin');
   const setMode=m=>{body.dataset.mode=m;bMin.classList.toggle('on',m==='minimal');bCin.classList.toggle('on',m==='cinematic');};
   bMin.onclick=()=>setMode('minimal');bCin.onclick=()=>setMode('cinematic');
 
-  const tp=document.getElementById('tp');const len=tp.getTotalLength();tp.style.strokeDasharray=len;tp.style.strokeDashoffset=len;
-  const onScroll=()=>{const max=document.body.scrollHeight-innerHeight;const p=Math.min(1,scrollY/max);tp.style.strokeDashoffset=len*(1-p);};
-  addEventListener('scroll',onScroll);onScroll();
+  // сквозная нить через общий компонент
+  function mountThread(){var c=getComputedStyle(document.body).getPropertyValue('--gold').trim()||'#e0a955';if(window.SaveThread)window.SaveThread.mount({color:c});}
+  mountThread();
 
   const num=document.getElementById('num');let v=1247;
   setInterval(()=>{v+=Math.floor(Math.random()*3);num.textContent=v.toLocaleString('ru-RU');},1900);
