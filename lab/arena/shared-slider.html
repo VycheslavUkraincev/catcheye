@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Слайдер До/После — общий блок (для С и всех)</title>
+<!--
+  ОБЩИЙ БЛОК «До/После» — Usability-фича (важна для Awwwards, вес 30%).
+  Для С: твоя «зона загрузки» в hero. Бери разметку .ba + скрипт ниже.
+  Перетаскивай ручку или веди мышью/пальцем — левая (after) открывается поверх before.
+-->
+<style>
+  body{margin:0;background:#0b0a09;color:#f1e9dc;font-family:Georgia,serif;display:grid;place-items:center;min-height:100vh;padding:6vh 6vw}
+  .wrap{text-align:center;max-width:760px}
+  .eyebrow{font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:#e0a955;margin-bottom:18px}
+  h1{font-weight:400;font-size:clamp(26px,5vw,52px);margin-bottom:30px}
+  .gold{color:#e0a955}
+  /* ── BEFORE/AFTER SLIDER ── */
+  .ba{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:8px;
+    user-select:none;box-shadow:0 30px 80px rgba(0,0,0,.6);cursor:ew-resize}
+  .ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+  .ba .after{clip-path:inset(0 50% 0 0)}      /* левая часть = восстановленное */
+  .ba .lblA,.ba .lblB{position:absolute;top:14px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    background:rgba(0,0,0,.55);padding:7px 12px;border:1px solid rgba(255,255,255,.2)}
+  .ba .lblA{left:14px;color:#e0a955}.ba .lblB{right:14px;color:#bbb}
+  .ba .handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:#e0a955;
+    box-shadow:0 0 12px #e0a955;transform:translateX(-1px)}
+  .ba .grip{position:absolute;top:50%;left:50%;width:42px;height:42px;border-radius:50%;
+    transform:translate(-50%,-50%);background:#e0a955;color:#0b0a09;display:grid;place-items:center;
+    font-size:18px;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+  .hint{margin-top:18px;color:#9a8f7f;font-size:13px;letter-spacing:.1em}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Попробуй сейчас</div>
+    <h1>Веди ручку — <span class="gold">прошлое оживает.</span></h1>
+
+    <!-- ─── копируй этот блок ─── -->
+    <div class="ba" id="ba">
+      <img class="before" src="https://smh-photos.fra1.digitaloceanspaces.com/assets/hero_before.jpg" alt="до">
+      <img class="after"  src="https://smh-photos.fra1.digitaloceanspaces.com/assets/hero_after.jpg"  alt="после">
+      <span class="lblA">после · 4K</span>
+      <span class="lblB">до</span>
+      <div class="handle" id="ba_handle"><div class="grip">⇄</div></div>
+    </div>
+    <!-- ─── /блок ─── -->
+
+    <p class="hint">первое фото — бесплатно · 15 секунд</p>
+  </div>
+
+<script>
+  // универсальный init: работает для любого .ba на странице
+  document.querySelectorAll('.ba').forEach(ba=>{
+    const after=ba.querySelector('.after');
+    const handle=ba.querySelector('.handle');
+    let dragging=false;
+    const setPos=(clientX)=>{
+      const r=ba.getBoundingClientRect();
+      let p=(clientX-r.left)/r.width; p=Math.max(0,Math.min(1,p));
+      after.style.clipPath=`inset(0 ${(1-p)*100}% 0 0)`;
+      handle.style.left=(p*100)+'%';
+    };
+    const start=()=>dragging=true, end=()=>dragging=false;
+    ba.addEventListener('mousedown',e=>{start();setPos(e.clientX);});
+    addEventListener('mousemove',e=>{if(dragging)setPos(e.clientX);});
+    addEventListener('mouseup',end);
+    ba.addEventListener('touchstart',e=>{start();setPos(e.touches[0].clientX);},{passive:true});
+    ba.addEventListener('touchmove',e=>{if(dragging)setPos(e.touches[0].clientX);},{passive:true});
+    addEventListener('touchend',end);
+    // лёгкая авто-демка при загрузке
+    let t=0;const demo=setInterval(()=>{t+=0.04;const p=0.5+Math.sin(t)*0.25;
+      after.style.clipPath=`inset(0 ${(1-p)*100}% 0 0)`;handle.style.left=(p*100)+'%';
+      if(t>3){clearInterval(demo);after.style.clipPath='inset(0 50% 0 0)';handle.style.left='50%';}},40);
+    ba.addEventListener('mousedown',()=>clearInterval(demo));
+  });
+</script>
+</body>
+</html>
