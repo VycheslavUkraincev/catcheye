@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Save My History — поверніть життя старим фото</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:#faf6f2;overflow-x:hidden;line-height:1.6;background:#1a1513}
+.progress{position:fixed;top:0;left:0;width:0;height:2px;background:#b8863c;z-index:999;transition:width .1s}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(26,21,19,.9),transparent);transition:background .4s}
+nav.scrolled{background:rgba(26,21,19,.95);backdrop-filter:blur(12px)}
+nav .logo{font-family:'DM Serif Display',serif;font-size:1rem;color:#b8863c;text-decoration:none}
+nav .lang{display:flex;gap:.5rem}
+nav .lang a{padding:.25rem .5rem;font-size:.7rem;text-transform:uppercase;color:rgba(250,246,242,.4);text-decoration:none;letter-spacing:1px;transition:color .3s}
+nav .lang a:hover, nav .lang a.active{color:#b8863c}
+section{position:relative}
+.container{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+h1,h2,h3{font-family:'DM Serif Display',serif;font-weight:400}
+h2{font-size:clamp(1.8rem,4vw,3rem);line-height:1.2;text-align:center}
+.label{font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:#b8863c;font-weight:600;text-align:center;margin-bottom:.75rem}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:6rem 1.5rem 4rem;background:linear-gradient(180deg,#1a1513 0%,#201a17 40%,#1a1513 100%);overflow:hidden}
+.hero-bg{position:absolute;inset:0;opacity:.06;background:radial-gradient(ellipse at 30% 40%,#b8863c 0,transparent 50%),radial-gradient(ellipse at 70% 60%,rgba(250,246,242,.1) 0,transparent 40%)}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:2}
+.hero-text .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border:1px solid rgba(184,134,60,.2);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:#b8863c;margin-bottom:1.5rem;background:rgba(184,134,60,.08)}
+.hero h1{font-size:clamp(2rem,4.5vw,3.5rem);line-height:1.15;margin-bottom:1rem}
+.hero h1 em{font-style:italic;color:#b8863c}
+.hero .sub{font-size:1rem;color:rgba(250,246,242,.55);max-width:480px;line-height:1.8;margin-bottom:2rem}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2rem;background:#b8863c;color:#1a1513;text-decoration:none;font-size:.85rem;font-weight:600;border:none;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
+.btn-primary:hover{background:#d4a04a;transform:translateY(-1px)}
+.btn-secondary{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2rem;border:1px solid rgba(250,246,242,.15);color:#faf6f2;text-decoration:none;font-size:.85rem;font-weight:500;transition:all .3s;background:transparent;font-family:'Inter',sans-serif}
+.btn-secondary:hover{border-color:#b8863c;color:#b8863c}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.hero-frame{position:relative;width:100%;max-width:420px;aspect-ratio:3/4;overflow:hidden;background:#2a241f;border:1px solid rgba(184,134,60,.12)}
+.hero-frame .before,.hero-frame .after{position:absolute;inset:0;background-size:cover;background-position:center}
+.hero-frame .before{background:url('assets/cases/case1-a.jpg') center/cover;opacity:1;transition:opacity 1.5s}
+.hero-frame .after{background:url('assets/cases/case1-b.jpg') center/cover;opacity:0;transition:opacity 1.5s .6s}
+.hero-frame.loaded .before{opacity:0}
+.hero-frame.loaded .after{opacity:1}
+.hero-frame .badge-tag{position:absolute;bottom:.75rem;font-size:.55rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(250,246,242,.4);background:rgba(26,21,19,.6);padding:.25rem .6rem;backdrop-filter:blur(4px);z-index:3}
+.hero-frame .btag-was{right:.75rem;left:auto}
+
+/* ── STORYTELLING ── */
+.story{background:#1a1513;padding:5rem 0;overflow:hidden}
+.story-block{max-width:720px;margin:0 auto;padding:0 1.5rem}
+.story-block p{font-size:clamp(1rem,2vw,1.2rem);color:rgba(250,246,242,.7);line-height:1.9;margin-bottom:2rem}
+.story-block .highlight{border-left:2px solid #b8863c;padding:1.5rem 2rem;background:rgba(184,134,60,.04);margin-bottom:2rem;font-style:italic;font-family:'DM Serif Display',serif;color:#faf6f2;font-size:clamp(1.1rem,2vw,1.4rem)}
+
+/* ── STATS ── */
+.stats{background:#201a17;padding:4rem 0}
+.stats-grid{display:flex;justify-content:center;gap:4rem;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-item .num{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);color:#b8863c}
+.stat-item .desc{font-size:.8rem;color:rgba(250,246,242,.4);margin-top:.25rem;text-transform:uppercase;letter-spacing:1px}
+
+/* ── HOW ── */
+.how{background:#faf6f2;color:#1a1513;padding:6rem 0}
+.how .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.how-step{text-align:center;padding:2rem}
+.how-step .step-icon{width:48px;height:48px;border-radius:50%;background:#1a1513;color:#faf6f2;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:1.2rem}
+.how-step h3{font-size:1.15rem;margin-bottom:.5rem}
+.how-step p{font-size:.85rem;color:rgba(26,21,19,.5);line-height:1.7;max-width:260px;margin:0 auto}
+.how-step .time{font-size:.75rem;color:#b8863c;margin-top:.75rem;font-weight:500}
+
+/* ── SHOWCASE ── */
+.showcase{background:#f4efe9;color:#1a1513;padding:6rem 0}
+.showcase .note{text-align:center;color:rgba(26,21,19,.4);font-size:.85rem;margin-top:.5rem}
+.slider-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem}
+.slider-card{position:relative;aspect-ratio:4/3;overflow:hidden;background:#2a241f;cursor:pointer;border:1px solid rgba(26,21,19,.06)}
+.slider-card .pair{display:flex;height:100%;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.slider-card .pair img{min-width:100%;height:100%;object-fit:cover;flex-shrink:0}
+.slider-card:hover .pair{transform:translateX(-50%)}
+.slider-card .slabel{position:absolute;bottom:.6rem;font-size:.55rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(250,246,242,.5);background:rgba(26,21,19,.5);padding:.2rem .5rem;backdrop-filter:blur(4px);z-index:2;pointer-events:none}
+.slider-card .slabel-before{left:.6rem}
+.slider-card .slabel-after{right:.6rem}
+.slider-card .shint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.65rem;color:rgba(250,246,242,.3);letter-spacing:1px;z-index:1;pointer-events:none;opacity:0;transition:opacity .3s}
+.slider-card:hover .shint{opacity:1}
+
+/* ── WHY ── */
+.whyus{background:#1a1513;padding:6rem 0;color:#faf6f2}
+.whyus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-top:3rem}
+.whyus-card{padding:2rem;border-left:2px solid rgba(184,134,60,.3)}
+.whyus-card .emoji{font-size:1.5rem;margin-bottom:.75rem;display:block}
+.whyus-card h3{font-size:1.05rem;margin-bottom:.5rem}
+.whyus-card p{font-size:.85rem;color:rgba(250,246,242,.5);line-height:1.7}
+.whyus-compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:2rem}
+.compete-card{padding:1.5rem;border:1px solid rgba(250,246,242,.06);text-align:center}
+.compete-card .name{font-size:.85rem;color:#b8863c;margin-bottom:.5rem}
+.compete-card .desc{font-size:.75rem;color:rgba(250,246,242,.4);line-height:1.5}
+
+/* ── GENEA ── */
+.genea{background:#faf6f2;color:#1a1513;padding:6rem 0;text-align:center}
+.genea p{max-width:600px;margin:1rem auto 2rem;color:rgba(26,21,19,.5);font-size:.9rem;line-height:1.8}
+.genea-visual{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;font-size:.8rem}
+.genea-visual span{padding:.4rem .8rem;border:1px solid rgba(26,21,19,.08)}
+
+/* ── CTA ── */
+.cta{background:linear-gradient(180deg,#faf6f2,#f4efe9);padding:6rem 0;color:#1a1513}
+.cta-box{background:#1a1513;color:#faf6f2;padding:4rem 3rem;text-align:center;max-width:700px;margin:0 auto;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(184,134,60,.08),transparent 60%)}
+.cta-box h2{color:#faf6f2;position:relative;z-index:2}
+.cta-box p{color:rgba(250,246,242,.5);margin:1rem auto 2rem;position:relative;z-index:2;font-size:.9rem;max-width:400px}
+.cta-form{display:flex;gap:.75rem;max-width:420px;margin:0 auto;position:relative;z-index:2}
+.cta-form input{flex:1;padding:.9rem 1.25rem;background:rgba(250,246,242,.06);border:1px solid rgba(250,246,242,.1);color:#faf6f2;font-family:'Inter',sans-serif;font-size:.85rem;outline:none;transition:border-color .3s}
+.cta-form input:focus{border-color:#b8863c}
+.cta-form input::placeholder{color:rgba(250,246,242,.2)}
+.cta-form button{padding:.9rem 1.75rem;background:#b8863c;color:#1a1513;border:none;cursor:pointer;font-weight:600;font-size:.8rem;letter-spacing:.5px;transition:all .3s;font-family:'Inter',sans-serif;white-space:nowrap}
+.cta-form button:hover{background:#d4a04a}
+.cta-note{font-size:.7rem;color:rgba(250,246,242,.2);margin-top:1rem;position:relative;z-index:2}
+
+/* ── FOOTER ── */
+footer{padding:3rem 1.5rem;text-align:center;background:#f4efe9;color:rgba(26,21,19,.3);border-top:1px solid rgba(26,21,19,.04)}
+footer .fcount{font-size:.85rem;margin-bottom:.25rem}
+footer .fcount em{color:#b8863c;font-style:normal}
+footer nav{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+footer nav a{color:rgba(26,21,19,.4);text-decoration:none;font-size:.8rem;transition:color .3s}
+footer nav a:hover{color:#b8863c}
+
+/* ── FADE ── */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s ease-out}
+.fade-up.in-view{opacity:1;transform:translateY(0)}
+
+/* ── RWD ── */
+@media(max-width:768px){
+.hero-inner{grid-template-columns:1fr;gap:2rem}
+.hero-visual{order:-1;max-width:280px;margin:0 auto}
+.hero h1{font-size:2rem}
+.how .how-grid{grid-template-columns:1fr}
+.slider-grid{grid-template-columns:1fr}
+.whyus-grid{grid-template-columns:1fr}
+.whyus-compare{grid-template-columns:1fr}
+.cta-form{flex-direction:column}
+.cta-box{padding:3rem 1.5rem}
+.stats-grid{gap:2rem}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progressBar"></div>
+
+<nav id="nav">
+  <a href="#" class="logo">✦ Save My History</a>
+  <div class="lang">
+    <a href="#" class="active">укр</a>
+    <a href="#">ru</a>
+    <a href="#">en</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner container">
+    <div class="hero-text">
+      <div class="badge">✦ чесна реставрація</div>
+      <h1>Ти прокачував персонажа <em>все життя</em>.<br>А сейви вицвітають у коробці.</h1>
+      <p class="sub">Не просто реставрація. Ми повертаємо обличчям їхню справжність — без омолодження, без ідеалізації. Таким, якими ви їх пам'ятаєте.</p>
+      <div class="hero-actions">
+        <a href="#try" class="btn-primary">Спробувати →</a>
+        <a href="#how" class="btn-secondary">Як це працює</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-frame" id="heroFrame">
+        <div class="before"></div>
+        <div class="after"></div>
+        <div class="badge-tag">Після</div>
+        <div class="badge-tag btag-was">До</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STORY ── -->
+<section class="story">
+  <div class="story-block">
+    <p>У кожній родині є фото, яке ніхто не наважується викинути. Воно лежить у шафі, в альбомі, в старій коробці з-під цукерок.</p>
+    <p>Вицвіле. Потріскане. У плямах. Але крізь усе це — погляд діда, якого ви знаєте лише з розповідей. Усмішка бабусі в день весілля. Обличчя, яке більше ніхто не пам'ятає.</p>
+    <div class="highlight">«Ми не домальовуємо спогади. Ми повертаємо їм ясність. Кожна зморшка, кожна риса — це чиясь історія. Ми не маємо права її змінювати.»</div>
+    <p>Ми створили сервіс, який робить тільки одне, але робить це чесно: відновлює старі фото без ідеалізації. Не «красивіше, ніж було». А такими, якими вони були насправді.</p>
+  </div>
+</section>
+
+<!-- ─── STATS ── -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item fade-up"><div class="num" data-target="283">0</div><div class="desc">Фото відновлено</div></div>
+      <div class="stat-item fade-up"><div class="num" data-target="20">0</div><div class="desc">Секунд на фото</div></div>
+      <div class="stat-item fade-up"><div class="num" data-target="99">0</div><div class="desc">% облич незмінні</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW ── -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="label">✦ Просто і швидко</div>
+    <h2>Три кроки — і фото оживає</h2>
+    <div class="how-grid">
+      <div class="how-step fade-up">
+        <div class="step-icon">📸</div>
+        <h3>Завантажте фото</h3>
+        <p>Будь-яке старе фото — вицвіле, потріскане, з подряпинами. Ми приймаємо всі формати.</p>
+        <div class="time">~5 секунд</div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="step-icon">✨</div>
+        <h3>МИ відновлюємо</h3>
+        <p>Прибираємо пошкодження, повертаємо колір. Обличчя залишаються справжніми.</p>
+        <div class="time">~20 секунд</div>
+      </div>
+      <div class="how-step fade-up">
+        <div class="step-icon">🌳</div>
+        <h3>Зберігайте назавжди</h3>
+        <p>Завантажте результат і поділіться з родиною. Кожне фото — подарунок рідним.</p>
+        <div class="time">Назавжди</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SHOWCASE ── -->
+<section class="showcase">
+  <div class="container">
+    <div class="label">✦ До і після</div>
+    <h2>Подивіться на результати</h2>
+    <p class="note">Наведіть на фото — побачите зміни</p>
+    <div class="slider-grid">
+      <div class="slider-card fade-up">
+        <div class="pair">
+          <img src="assets/cases/case1-a.jpg" alt="До">
+          <img src="assets/cases/case1-b.jpg" alt="Після">
+        </div>
+        <span class="slabel slabel-before">Було</span>
+        <span class="slabel slabel-after">Стало</span>
+        <span class="shint">Наведіть →</span>
+      </div>
+      <div class="slider-card fade-up">
+        <div class="pair">
+          <img src="assets/cases/case2-a.jpg" alt="До">
+          <img src="assets/cases/case2-b.jpg" alt="Після">
+        </div>
+        <span class="slabel slabel-before">Було</span>
+        <span class="slabel slabel-after">Стало</span>
+        <span class="shint">Наведіть →</span>
+      </div>
+      <div class="slider-card fade-up">
+        <div class="pair">
+          <img src="assets/cases/case3-a.jpg" alt="До">
+          <img src="assets/cases/case3-b.jpg" alt="Після">
+        </div>
+        <span class="slabel slabel-before">Було</span>
+        <span class="slabel slabel-after">Стало</span>
+        <span class="shint">Наведіть →</span>
+      </div>
+      <div class="slider-card fade-up">
+        <div class="pair">
+          <img src="assets/cases/case4-a.jpg" alt="До">
+          <img src="assets/cases/case4-b.jpg" alt="Після">
+        </div>
+        <span class="slabel slabel-before">Було</span>
+        <span class="slabel slabel-after">Стало</span>
+        <span class="shint">Наведіть →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHY US ── -->
+<section class="whyus">
+  <div class="container">
+    <div class="label">✦ Чому нам довіряють</div>
+    <h2>Чесна реставрація — не просто слова</h2>
+    <div class="whyus-grid">
+      <div class="whyus-card fade-up">
+        <span class="emoji">🕊️</span>
+        <h3>Справжні обличчя</h3>
+        <p>Ми не омолоджуємо і не «покращуємо». Рідна людина залишається собою — такою, якою ви її пам'ятаєте.</p>
+      </div>
+      <div class="whyus-card fade-up">
+        <span class="emoji">🔬</span>
+        <h3>Подвійний контроль</h3>
+        <p>Кожне фото перевіряється ІІ до і після обробки. Якщо щось не так — фото йде на ручний контроль.</p>
+      </div>
+      <div class="whyus-card fade-up">
+        <span class="emoji">🔒</span>
+        <h3>Приватність</h3>
+        <p>Ваші фото не використовуються для навчання моделей. Ви можете видалити їх будь-коли.</p>
+      </div>
+      <div class="whyus-card fade-up">
+        <span class="emoji">💛</span>
+        <h3>3 турботою</h3>
+        <p>За кожним фото — чиясь історія. Ми ставимося до цього з повагою. Не просто технологія, а місія.</p>
+      </div>
+    </div>
+    <div class="whyus-compare fade-up" style="margin-top:3rem">
+      <div class="compete-card"><div class="name">❌ Remini / MyHeritage</div><div class="desc">Омолоджують, «покращують», додають те, чого не було. Обличчя стають чужими.</div></div>
+      <div class="compete-card"><div class="name">✅ Save My History</div><div class="desc">Чесне відновлення. Тільки прибираємо пошкодження. Обличчя — як в оригіналі.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GENEA ── -->
+<section class="genea">
+  <div class="container">
+    <div class="label">✦ Хранитель роду</div>
+    <h2>Не просто фото — ваше дерево</h2>
+    <p>Кожне відновлене фото автоматично стає частиною вашого родинного дерева. Розмовляйте з ІІ про своїх предків — і дерево будуватиметься само.</p>
+    <div class="genea-visual">
+      <span>🟢 Повне</span>
+      <span>🟡 Часткове</span>
+      <span>⚪ Привид</span>
+      <span>🔵 Живий</span>
+    </div>
+    <a href="https://savemyhistory.tech/story.html" class="btn-secondary" style="margin-top:2rem;display:inline-flex;color:#1a1513;border-color:#1a1513">Дізнатись більше →</a>
+  </div>
+</section>
+
+<!-- ─── CTA ── -->
+<section class="cta" id="try">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Готові повернути<br>свою історію?</h2>
+      <p>Спробуйте безплатно. Перші 3 фото — без оплати. Просто завантажте і переконайтесь самі.</p>
+      <form class="cta-form" action="https://savemyhistory.tech" method="GET">
+        <input type="email" placeholder="Ваш email — отримайте доступ">
+        <button type="submit">Почати →</button>
+      </form>
+      <div class="cta-note">Без спаму. Тільки важливе.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ── -->
+<footer>
+  <div class="fcount">Відновлено <em id="totalCount">283</em> фото · Пам'ятаємо <em>156</em> облич</div>
+  <nav>
+    <a href="https://savemyhistory.tech">Сайт</a>
+    <a href="https://instagram.com/save.my.history">Instagram</a>
+    <a href="https://savemyhistory.tech/privacy.html">Privacy</a>
+    <a href="https://savemyhistory.tech/terms.html">Terms</a>
+  </nav>
+</footer>
+
+<script>
+// ── Progress ──
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY, h=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('progressBar').style.width=(s/h*100)+'%';
+  document.getElementById('nav').classList.toggle('scrolled',s>60);
+});
+
+// ── Hero animation ──
+setTimeout(()=>document.getElementById('heroFrame').classList.add('loaded'),800);
+
+// ── Intersection Observer ──
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in-view');
+      // Animate counters when stats section appears
+      if(e.target.classList.contains('stat-item')) animateCounter(e.target.querySelector('.num'));
+    }
+  });
+},{threshold:.15});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// ── Counter animation ──
+function animateCounter(el){
+  const target=parseInt(el.dataset.target);
+  let current=0;
+  const dur=1800, t0=performance.now();
+  function tick(now){
+    const t=Math.min(1,(now-t0)/dur);
+    el.textContent=Math.floor(current+(target-current)*(1-Math.pow(1-t,3)));
+    if(t<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+</script>
+</body>
+</html>
